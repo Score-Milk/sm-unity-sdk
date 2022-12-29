@@ -51,7 +51,7 @@ window.addEventListener('load', async function () {
 
 		if (messageData.action === 'disconnectedWallet'){
 			if (window.unityInstance != null) {
-				window.unityInstance.SendMessage('ScoreMilkManager', 'disconnectedWallet', JSON.stringify(messageData));
+				window.unityInstance.SendMessage('ScoreMilkManager', 'disconnectedWallet');
 			}
 		}
 	});
