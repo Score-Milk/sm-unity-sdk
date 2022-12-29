@@ -126,7 +126,7 @@ namespace ScoreMilk{
         /// </summary>
         public void walletConnected(string wallet)
         {
-            Debug.Log("recebido matchNotFound");
+            Debug.Log("recebido walletConnected");
             wallet_id = wallet;
             ScoreMilk.Connection.Instance.walletConnectedCall(wallet);
         }
