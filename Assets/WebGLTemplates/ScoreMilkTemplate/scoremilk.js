@@ -34,7 +34,7 @@ window.addEventListener('load', async function () {
 
 		if (messageData.action === 'connectedWallet'){
 			if (window.unityInstance != null) {
-				window.unityInstance.SendMessage('ScoreMilkManager', 'walletConnected', JSON.stringify(messageData));
+				window.unityInstance.SendMessage('ScoreMilkManager', 'connectedWallet', messageData.address);
 			}
 		}
 
