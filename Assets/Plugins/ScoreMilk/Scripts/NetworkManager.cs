@@ -58,7 +58,7 @@ namespace ScoreMilk{
 
             data.points = points.ToString();
 
-            WebConnection.Instance.Emit("player-finished-game", data);
+            WebConnection.Instance.Emit("/matches/player-finished-game", data);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace ScoreMilk{
             data.player_id = NetworkManager.Instance.address;
 
             data.points = score.ToString();
-            WebConnection.Instance.Emit("player-score-game", data);
+            WebConnection.Instance.Emit("/matches/player-score-game", data);
         }
         
         /// <summary>
@@ -88,7 +88,7 @@ namespace ScoreMilk{
             data.points = "";
 
             //Application.ExternalCall("socket.emit", "EMIT_READY", new JSONObject(data));
-            WebConnection.Instance.Emit("player-loaded-game", data);
+            WebConnection.Instance.Emit("/matches/player-loaded-game", data);
         }
         /// <summary>
         /// Called when match is cancelled
