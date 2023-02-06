@@ -34,13 +34,13 @@ window.addEventListener('load', async function () {
 
 		if (messageData.action === 'connectedWallet'){
 			if (window.unityInstance != null) {
-				window.unityInstance.SendMessage('ScoreMilkManager', 'connectedWallet', JSON.stringify(messageData));
+				window.unityInstance.SendMessage('ScoreMilkManager', 'connectedWallet', messageData.address);
 			}
 		}
 
 		if (messageData.action === 'disconnectedWallet'){
 			if (window.unityInstance != null) {
-				window.unityInstance.SendMessage('ScoreMilkManager', 'disconnectedWallet');
+				window.unityInstance.SendMessage('ScoreMilkManager', 'walletDisconnected');
 			}
 		}
 	});

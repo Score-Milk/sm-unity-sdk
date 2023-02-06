@@ -8,26 +8,29 @@ public class Connection : Singleton<Connection>
 {
         /// <summary>
         /// Received event that player pressed "play" button
+        /// Game should go to real match scene and wait for start.
         /// This is before the players accept their transactions.
-        /// Match should not start right after this is received
+        /// Match starts after both players have accepted transaction and sent "EmitReady()"
         /// </summary>
         public static event EventHandler OnReceivedMatchmakingStart;
         /// <summary>
         /// Received event that player pressed "practice" button
+        /// Game should go to a practice scene. NOT title screen.
         /// </summary>
         public static event EventHandler OnReceivedToPractice;
         /// <summary>
-        /// Received event that match was cancelled for any reason
+        /// Match was cancelled for any reason.
+        /// Game should go back previous scene or title.
         /// </summary>
         public static event EventHandler OnReceivedCancelMatch;
         /// <summary>
-        /// Received event that match has to start
-        /// Match starts after both players have accepted transaction and sent "EmitReady()"
+        /// Received event both players are ready and accepted the required crypto transaction. 
+        /// Game should continue and start match.
         /// </summary>
         public static event EventHandler OnReceivedStart;
         /// <summary>
         /// Received event that wallet connected
-        /// Sends wallet id
+        /// Receives wallet id as string
         /// </summary>
         public static event EventHandler<string> OnReceivedWalletConnected;
         /// <summary>

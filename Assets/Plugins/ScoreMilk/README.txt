@@ -29,10 +29,10 @@ Note: If you don’t find this option or it is disabled, please install WebGL bu
             ScoreMilk.Connection.OnReceivedMatchmakingStart -= OnMatchmaking;
         }
     - You have to Subscribe/Unsubscribe to 4 events:
-        ScoreMilk.Connection.OnReceivedMatchmakingStart: Player pressed "play" button
-        ScoreMilk.Connection.OnReceivedToPractice: Player pressed "practice" button
-        ScoreMilk.Connection.OnReceivedCancelMatch: Match was cancelled for any reason
-        ScoreMilk.Connection.OnReceivedStart: Both players are ready and accepted the required crypto transaction
+        ScoreMilk.Connection.OnReceivedMatchmakingStart: Player pressed "play" button. Game should go to real match scene and wait for start.
+        ScoreMilk.Connection.OnReceivedToPractice: Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
+        ScoreMilk.Connection.OnReceivedCancelMatch: Match was cancelled for any reason. Game should go back previous scene or title.
+        ScoreMilk.Connection.OnReceivedStart: Both players are ready and accepted the required crypto transaction. Game should continue and start match.
         ScoreMilk.Connection.OnReceivedWalletConnected:  Wallet connected
         ScoreMilk.Connection.OnReceivedWalletDisconnected:  Wallet disconnected
 
