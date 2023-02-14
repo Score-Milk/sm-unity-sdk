@@ -7,6 +7,12 @@ window.gameLoaded = () => {
 window.addEventListener('load', async function () {
 	window.addEventListener("message", (event) => {
 		const messageData = event.data;
+
+		if (messageData.action == 'setEnvs'){
+			if (window.unityInstance != null) {
+				window.unityInstance.SendMessage('ScoreMilkManager', 'SetEnvs', JSON.stringify(messageData));
+			}
+		}
 		
 		if (messageData.action == 'loadPractice'){
 			if (window.unityInstance != null) {
@@ -34,7 +40,7 @@ window.addEventListener('load', async function () {
 
 		if (messageData.action === 'connectedWallet'){
 			if (window.unityInstance != null) {
-				window.unityInstance.SendMessage('ScoreMilkManager', 'connectedWallet', messageData.address);
+				window.unityInstance.SendMessage('ScoreMilkManager', 'walletConnected', JSON.stringify(messageData));
 			}
 		}
 

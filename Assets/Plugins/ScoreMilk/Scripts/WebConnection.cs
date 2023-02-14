@@ -20,7 +20,7 @@ public class WebConnection : Singleton<WebConnection>
     }
 
     public void Emit(string name, PlayerData data){
-        StartCoroutine(GetText(url + "/" + name, data));
+        StartCoroutine(GetText(url + name, data));
     }
     IEnumerator GetText(string names, PlayerData data) {
         UnityWebRequest www = UnityWebRequest.Put(names, JsonUtility.ToJson(data));
