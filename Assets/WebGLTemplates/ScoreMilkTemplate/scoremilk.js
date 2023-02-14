@@ -10,7 +10,7 @@ window.addEventListener('load', async function () {
 
 		if (messageData.action == 'setEnvs'){
 			if (window.unityInstance != null) {
-				window.unityInstance.SendMessage('ScoreMilkManager', 'SetEnvs', JSON.stringify(messageData));
+				window.unityInstance.SendMessage('ScoreMilkManager', 'SetEnvs', JSON.stringify(messageData.envs));
 			}
 		}
 		
