@@ -28,7 +28,7 @@ window.addEventListener('load', async function () {
 
 		if (messageData.action == 'canStartGame'){
 			if (window.unityInstance != null) {
-				window.unityInstance.SendMessage('ScoreMilkManager', 'canStartGame');
+				window.unityInstance.SendMessage('ScoreMilkManager', 'canStartGame', JSON.stringify(messageData.user));
 			}
 		}
 

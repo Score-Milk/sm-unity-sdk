@@ -30,9 +30,10 @@ namespace ScoreMilk{
         /// Received message that indicates game can properly start
         /// NOT necessary to call. Use event instead.
         /// </summary>
-        void canStartGame() 
+        void canStartGame(string jsonData) 
         {
-            Connection.Instance.canStartGameCall();
+            var userData = JsonConvert.DeserializeObject<UserData>(jsonData);
+            Connection.Instance.canStartGameCall(userData);
             Debug.Log("Recebido canStartGame");
         }
         /// <summary>
@@ -186,7 +187,13 @@ namespace ScoreMilk{
         public string points;
     }
     
-
+    class UserData {
+        public string name;
+        public string username;
+        public string avatar;
+        public string bio;
+    }
+    
     class Envs {
         public string API_URL;
     }

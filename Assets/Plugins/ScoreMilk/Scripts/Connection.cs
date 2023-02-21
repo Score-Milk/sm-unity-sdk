@@ -67,9 +67,9 @@ public class Connection : Singleton<Connection>
         /// Received message that indicates game can properly start
         /// NOT necessary to call. Use event instead.
         /// </summary>
-        public void canStartGameCall() 
+        public void canStartGameCall(userData UserData) 
         {
-            OnReceivedStart?.Invoke(this, EventArgs.Empty);
+            OnReceivedStart?.Invoke(this, userData);
         }
         /// <summary>
         /// Received message that indicates game should go to practice mode
