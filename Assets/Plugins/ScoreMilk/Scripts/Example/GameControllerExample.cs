@@ -64,7 +64,7 @@ public class GameControllerExample : MonoBehaviour
     }
     /// Called when match has started properly
     /// Probably put here function to start online game
-    private void OnReceivedStart(object sender, EventArgs e){
+    private void OnReceivedStart(object sender, StartRealGameData e){
         print("ReceivedStart stuff here");
         SceneManager.LoadScene("OnlineGame");
     }

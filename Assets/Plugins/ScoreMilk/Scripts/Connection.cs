@@ -27,7 +27,7 @@ public class Connection : Singleton<Connection>
         /// Received event both players are ready and accepted the required crypto transaction. 
         /// Game should continue and start match.
         /// </summary>
-        public static event EventHandler OnReceivedStart;
+        public static event EventHandler<StartRealGameData> OnReceivedStart;
         /// <summary>
         /// Received event that wallet connected
         /// Receives wallet id as string
@@ -38,14 +38,54 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public static event EventHandler OnReceivedWalletDisconnected;
 
-        
         /// <summary>
-        /// Emits message to server that says player is ready to start match
+        /// Called when wallet connects
+        /// NOT necessary to call in Unity
         /// </summary>
-        public static void EmitReady()
+        public void walletConnectedCall(string walletAddress)
         {
-            NetworkManager.Instance.EmitReady();
+            OnReceivedWalletConnected?.Invoke(this, walletAddress);
         }
+        /// <summary>
+        /// Called when wallet disconnects
+        /// NOT necessary to call in Unity
+        /// </summary>
+        public void walletDisconnectedCall()
+        {
+            OnReceivedWalletDisconnected?.Invoke(this, EventArgs.Empty);
+        }
+        /// <summary>
+        /// Received message that indicates game should go to practice mode
+        /// NOT necessary to call. Use event instead.
+        /// </summary>
+        public void startPracticeGameCall(){
+            OnReceivedToPractice?.Invoke(this, EventArgs.Empty);
+        }
+        /// <summary>
+        /// Called when matchmaking starts
+        /// NOT necessary to call in Unity
+        /// </summary>
+        public void getReadyCall()
+        {
+            OnReceivedMatchmakingStart?.Invoke(this, EventArgs.Empty);
+        }
+        /// <summary>
+        /// Received message that indicates game can properly start
+        /// NOT necessary to call. Use event instead.
+        /// </summary>
+        public void startRealGameCall(StartRealGameData userData) 
+        {
+            OnReceivedStart?.Invoke(this, userData);
+        }
+        /// <summary>
+        /// Called when match is cancelled
+        /// NOT necessary to call. Use event instead.
+        /// </summary>
+        public void quitToMenuCall()
+        {
+            OnReceivedCancelMatch?.Invoke(this, EventArgs.Empty);
+        }
+
         /// <summary>
         /// Emits message to server that says player got points during match
         /// </summary>
@@ -61,66 +101,12 @@ public class Connection : Singleton<Connection>
         {
             NetworkManager.Instance.EmitGameOver(points);
         }
-        
-        
         /// <summary>
-        /// Received message that indicates game can properly start
-        /// NOT necessary to call. Use event instead.
+        /// Emits message to server that says player is ready to start match
         /// </summary>
-        public void canStartGameCall(userData UserData) 
+        public static void EmitReady()
         {
-            OnReceivedStart?.Invoke(this, userData);
-        }
-        /// <summary>
-        /// Received message that indicates game should go to practice mode
-        /// NOT necessary to call. Use event instead.
-        /// </summary>
-        public void toPracticeGameCall(){
-            OnReceivedToPractice?.Invoke(this, EventArgs.Empty);
-        }
-        /// <summary>
-        /// Called when match is cancelled
-        /// NOT necessary to call. Use event instead.
-        /// </summary>
-        public void cancelMatchCall(string json)
-        {
-            OnReceivedCancelMatch?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Called when match is cancelled 
-        /// NOT necessary to call in Unity. Use event instead.
-        /// </summary>
-        public void matchNotFoundCall(string json)
-        {
-            OnReceivedCancelMatch?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Called when matchmaking starts
-        /// NOT necessary to call in Unity
-        /// </summary>
-        public void startMatchmakingCall(string json)
-        {
-            OnReceivedMatchmakingStart?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Called when wallet connects
-        /// NOT necessary to call in Unity
-        /// </summary>
-        public void walletConnectedCall(string wallet)
-        {
-            OnReceivedWalletConnected?.Invoke(this, wallet);
-        }
-
-        /// <summary>
-        /// Called when wallet disconnects
-        /// NOT necessary to call in Unity
-        /// </summary>
-        public void walletDisconnectedCall()
-        {
-            OnReceivedWalletDisconnected?.Invoke(this, EventArgs.Empty);
+            NetworkManager.Instance.EmitReady();
         }
 }
 }
