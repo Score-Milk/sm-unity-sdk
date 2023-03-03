@@ -45,7 +45,7 @@ public class GameControllerExample : MonoBehaviour
     /// Game prepares itself for the match start and waits
     /// Do not start the match, only prepare for it
     private void GetReady(object sender, EventArgs e){
-        print("Matchmaking stuff here");
+        print("GetReady stuff here");
         var manager = GameObject.FindWithTag("GameManager");
         if (manager != null){
             manager.SendMessage("GetReady");
@@ -53,7 +53,7 @@ public class GameControllerExample : MonoBehaviour
     }
     /// Called when player pressed "practice" button
     private void StartPracticeGame(object sender, EventArgs e){
-        print("OnReceivedPractice stuff here");
+        print("StartPracticeGame stuff here");
         SceneManager.LoadScene("PracticeGame");
     }
     /// Called when an error occurs
@@ -64,7 +64,16 @@ public class GameControllerExample : MonoBehaviour
     /// Called when match has started properly
     /// Starts the match
     private void StartRealGame(object sender, StartRealGameData e){
-        print("ReceivedStart stuff here");
+        print("StartRealGame stuff here");
+        SceneManager.LoadScene("RealGame");
+    }
+    /// Called when the user connects a wallet
+    private void AddWallet(object sender, string address){
+        print("AddWallet stuff here");
+    }
+    /// Called when the user disconnects the wallet
+    private void RemoveWallet(object sender, EventArgs e){
+        print("RemoveWallet stuff here");
         SceneManager.LoadScene("RealGame");
     }
 #endregion
