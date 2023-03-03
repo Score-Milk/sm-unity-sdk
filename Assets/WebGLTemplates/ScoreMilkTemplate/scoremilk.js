@@ -2,7 +2,7 @@ window.gameLoaded = () => {
 	window.parent.postMessage({
 		message: 'gameLoaded',
 		data: {
-			version: '0.2.0',
+			version: '0.2.1',
 			platform: 'Unity'
 		}
 	}, "*");
