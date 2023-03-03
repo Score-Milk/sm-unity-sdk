@@ -6,3 +6,10 @@ ProjectSettings
 Assets/Plugins/ScoreMilk.meta
 Assets/WebGLTemplates.meta
 Assets/Plugins.meta
+Plugins.Scoremilk.csproj
+sm-unity-sdk.sln
+Tests.csproj
+.vscode/settings.json
+Temp/FSTimeGet-462b81ed97f08c18c971a6f7e34bb7cb
+Temp/UnityLockfile
+Temp/workerlic
