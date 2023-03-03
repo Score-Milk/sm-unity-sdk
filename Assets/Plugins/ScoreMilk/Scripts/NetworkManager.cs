@@ -59,7 +59,6 @@ namespace ScoreMilk{
         /// NOT necessary to call in Unity
         /// </summary>
         void getReady(string json){
-            Debug.Log(json);
             try
             {
                 PlayerData playerData = JsonUtility.FromJson<PlayerData>(json);
@@ -95,8 +94,6 @@ namespace ScoreMilk{
         /// </summary>
         public void EmitGameOver(int points)
         {
-            Debug.Log("GAME OVER");
-
             PlayerData data = new PlayerData();
             data.match_room_id = NetworkManager.Instance.match_room_id;
             data.player_id = NetworkManager.Instance.player_id;
@@ -122,7 +119,6 @@ namespace ScoreMilk{
         /// </summary>
         public void EmitReady()
         {
-            Debug.Log("Emitindo EmitReady");
             PlayerData data = new PlayerData();
             data.match_room_id = NetworkManager.Instance.match_room_id;
             data.player_id = NetworkManager.Instance.player_id;
@@ -138,7 +134,6 @@ namespace ScoreMilk{
         void OnlineApplicationQuit()
         {
             EmitGameOver(0);
-            Debug.Log("Application ending after " + Time.time + " seconds");
         }
     }
     [Serializable]

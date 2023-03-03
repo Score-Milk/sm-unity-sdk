@@ -32,10 +32,6 @@ public class WebConnection : Singleton<WebConnection>
         if (www.result != UnityWebRequest.Result.Success) {
             Debug.Log(www.error);
         }
-        else {
-            Debug.Log("got answer");
-            Debug.Log(www.downloadHandler.text); 
-        }
     }
 
 
