@@ -1,3 +1,8 @@
+/*
+    These are internal functions of the Score Milk SDK.
+    Do not use any of the functions in this file.
+*/
+
 using System;
 using UnityEngine;
 using Newtonsoft.Json;
@@ -54,7 +59,17 @@ namespace ScoreMilk{
         /// NOT necessary to call in Unity
         /// </summary>
         void getReady(string json){
-            parseJson(json);
+            Debug.Log(json);
+            try
+            {
+                PlayerData playerData = JsonUtility.FromJson<PlayerData>(json);
+                NetworkManager.Instance.match_room_id = playerData.match_room_id;
+                NetworkManager.Instance.player_id = playerData.player_id;
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.ToString());
+            }
             ScoreMilk.Connection.Instance.getReadyCall();
         }
         /// <summary>
@@ -90,7 +105,6 @@ namespace ScoreMilk{
 
             WebConnection.Instance.Emit("/matches/player-finished-game", data);
         }
-
         /// <summary>
         /// Emits message to server that says player got points during match
         /// </summary>
@@ -103,7 +117,6 @@ namespace ScoreMilk{
             data.points = score.ToString();
             WebConnection.Instance.Emit("/matches/player-score-game", data);
         }
-        
         /// <summary>
         /// Emits message to server that says player is ready to start match
         /// </summary>
@@ -126,19 +139,6 @@ namespace ScoreMilk{
         {
             EmitGameOver(0);
             Debug.Log("Application ending after " + Time.time + " seconds");
-        }
-        void parseJson(string json){
-            Debug.Log(json);
-            try
-            {
-                PlayerData playerData = JsonUtility.FromJson<PlayerData>(json);
-                NetworkManager.Instance.match_room_id = playerData.match_room_id;
-                NetworkManager.Instance.player_id = playerData.player_id;
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.ToString());
-            }
         }
     }
     [Serializable]

@@ -23,41 +23,38 @@ Note: If you don’t find this option or it is disabled, please install WebGL bu
 5) Subscribe GameObjects to ScoreMilk Events
     - You Subscribe events in a GameObject like this:
         private void OnEnable() {
-            ScoreMilk.Connection.OnReceivedMatchmakingStart += OnMatchmaking;
+            ScoreMilk.Connection.OnReceivedGetReady += OnMatchmaking;
         }
         private void OnDisable() {
-            ScoreMilk.Connection.OnReceivedMatchmakingStart -= OnMatchmaking;
+            ScoreMilk.Connection.OnReceivedGetReady -= OnMatchmaking;
         }
     - You have to Subscribe/Unsubscribe to 4 events:
-        ScoreMilk.Connection.OnReceivedMatchmakingStart: Player pressed "play" button. Game should go to real match scene and wait for start.
-        ScoreMilk.Connection.OnReceivedToPractice: Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
-        ScoreMilk.Connection.OnReceivedCancelMatch: Match was cancelled for any reason. Game should go back previous scene or title.
-        ScoreMilk.Connection.OnReceivedStart: Both players are ready and accepted the required crypto transaction. Game should continue and start match.
-        ScoreMilk.Connection.OnReceivedWalletConnected:  Wallet connected
+        ScoreMilk.Connection.OnReceivedGetReady: Player pressed "play" button. Game should go to real match scene and wait for start.
+        ScoreMilk.Connection.OnReceivedStartPracticeGame: Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
+        ScoreMilk.Connection.OnReceivedQuitToMenu: Match was cancelled for any reason. Game should go back previous scene or title.
+        ScoreMilk.Connection.OnReceivedStartRealGame: Both players are ready and accepted the required crypto transaction. Game should continue and start match.
+        ScoreMilk.Connection.OnReceivedWalletConnected:  Wallet connected. Sends wallet address in event
         ScoreMilk.Connection.OnReceivedWalletDisconnected:  Wallet disconnected
 
-    - Sends wallet id in event
     Notes:
     - Unsubscribing is not strictly necessary, but it's considered good practice.
 
 
 6) Emit messages to server accordingly to game
-    - You Emit messages like this:
+    - You emit messages like this:
         ScoreMilk.Connection.EmitAddScore(points);
 
-    - You have to Emit 3 messages:
-        ScoreMilk.Connection.EmitReady(): When online Scene is fully loaded
+    - You have to emit 3 messages:
+        ScoreMilk.Connection.EmitReady(): When the game is ready to start a real match. After emitting this, just wait. Do not start the match yet.
         ScoreMilk.Connection.EmitAddScore(int points): When player scored <points> points
         ScoreMilk.Connection.EmitGameOver(int points): When game has ended. 
 
     Notes:
-    - Location of code varies heavily accordingly with game
-    - Points can be positive or negative. Negative points decrease final value.
+    - Points can be positive or negative.
     - Points emitted at GameOver must be the same as the sum of all points emitted previously.
 
 
-7) You are done! 
-    - Build the game and send us the built files!
+7) You are done!
 
 ============= Example =============
 

@@ -33,7 +33,6 @@ public class WebConnection : Singleton<WebConnection>
             Debug.Log(www.error);
         }
         else {
-            // Show results as text //temp
             Debug.Log("got answer");
             Debug.Log(www.downloadHandler.text); 
         }

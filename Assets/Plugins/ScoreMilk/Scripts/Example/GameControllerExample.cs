@@ -9,17 +9,17 @@ public class GameControllerExample : MonoBehaviour
 # region Subscribing events
     // Subscribes events on start of Application
     private void OnEnable() {
-        ScoreMilk.Connection.OnReceivedMatchmakingStart += OnMatchmaking;
-        ScoreMilk.Connection.OnReceivedToPractice += OnReceivedPractice;
-        ScoreMilk.Connection.OnReceivedCancelMatch += OnMatchNotFound;
-        ScoreMilk.Connection.OnReceivedStart += OnReceivedStart;
+        ScoreMilk.Connection.OnReceivedGetReady += GetReady;
+        ScoreMilk.Connection.OnReceivedStartPracticeGame += StartPracticeGame;
+        ScoreMilk.Connection.OnReceivedQuitToMenu += QuitToMenu;
+        ScoreMilk.Connection.OnReceivedStartRealGame += StartRealGame;
     }
     // Unsubscribes events on end of Application
     private void OnDisable() {
-        ScoreMilk.Connection.OnReceivedMatchmakingStart -= OnMatchmaking;
-        ScoreMilk.Connection.OnReceivedToPractice -= OnReceivedPractice;
-        ScoreMilk.Connection.OnReceivedCancelMatch -= OnMatchNotFound;
-        ScoreMilk.Connection.OnReceivedStart -= OnReceivedStart;
+        ScoreMilk.Connection.OnReceivedGetReady -= GetReady;
+        ScoreMilk.Connection.OnReceivedStartPracticeGame -= StartPracticeGame;
+        ScoreMilk.Connection.OnReceivedQuitToMenu -= QuitToMenu;
+        ScoreMilk.Connection.OnReceivedStartRealGame -= StartRealGame;
     }
 # endregion
 
@@ -42,31 +42,30 @@ public class GameControllerExample : MonoBehaviour
 # region Events
 
     /// Called when player pressed "play" button
-    /// Probably put here functions to change game scene to online game scene
-    private void OnMatchmaking(object sender, EventArgs e){
+    /// Game prepares itself for the match start and waits
+    /// Do not start the match, only prepare for it
+    private void GetReady(object sender, EventArgs e){
         print("Matchmaking stuff here");
         var manager = GameObject.FindWithTag("GameManager");
         if (manager != null){
-            manager.SendMessage("StartMatch");
+            manager.SendMessage("GetReady");
         }
     }
     /// Called when player pressed "practice" button
-    /// Probably put here functions to change game scene to practice game scene
-    private void OnReceivedPractice(object sender, EventArgs e){
+    private void StartPracticeGame(object sender, EventArgs e){
         print("OnReceivedPractice stuff here");
         SceneManager.LoadScene("PracticeGame");
     }
-    /// Called when match has not started properly
-    /// Probably put here function to return to title scene
-    private void OnMatchNotFound(object sender, EventArgs e){
-        print("MatchNotFound stuff here");
-        SceneManager.LoadScene("Title");
+    /// Called when an error occurs
+    private void QuitToMenu(object sender, EventArgs e){
+        print("QuitToMenu stuff here");
+        SceneManager.LoadScene("Menu");
     }
     /// Called when match has started properly
-    /// Probably put here function to start online game
-    private void OnReceivedStart(object sender, StartRealGameData e){
+    /// Starts the match
+    private void StartRealGame(object sender, StartRealGameData e){
         print("ReceivedStart stuff here");
-        SceneManager.LoadScene("OnlineGame");
+        SceneManager.LoadScene("RealGame");
     }
 #endregion
 }
