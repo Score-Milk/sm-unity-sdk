@@ -79,7 +79,7 @@ public class Connection : Singleton<Connection>
         /// Called when wallet connects
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void walletConnectedCall(string walletAddress)
+        public void WalletConnectedCall(string walletAddress)
         {
             OnReceivedWalletConnected?.Invoke(this, walletAddress);
         }
@@ -87,7 +87,7 @@ public class Connection : Singleton<Connection>
         /// Called when wallet disconnects
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void walletDisconnectedCall()
+        public void WalletDisconnectedCall()
         {
             OnReceivedWalletDisconnected?.Invoke(this, EventArgs.Empty);
         }
@@ -95,14 +95,14 @@ public class Connection : Singleton<Connection>
         /// Received message that indicates game should go to practice mode
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void startPracticeGameCall(){
+        public void StartPracticeGameCall(){
             OnReceivedStartPracticeGame?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Called when matchmaking starts
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void getReadyCall(GetReadyData data)
+        public void GetReadyCall(GetReadyData data)
         {
             OnReceivedGetReady?.Invoke(this, data);
         }
@@ -110,7 +110,7 @@ public class Connection : Singleton<Connection>
         /// Received message that indicates game can properly start
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void startRealGameCall() 
+        public void StartRealGameCall() 
         {
             OnReceivedStartRealGame?.Invoke(this, EventArgs.Empty);
         }
@@ -118,7 +118,7 @@ public class Connection : Singleton<Connection>
         /// Called when match is cancelled
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void quitToMenuCall()
+        public void QuitToMenuCall()
         {
             OnReceivedQuitToMenu?.Invoke(this, EventArgs.Empty);
         }

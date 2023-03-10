@@ -1,6 +1,8 @@
 /*
     These are internal functions of the Score Milk SDK.
     Do not use any of the functions in this file.
+
+    Variables that come from and functions called by the bridge are in camelCase
 */
 
 using System;
@@ -36,7 +38,7 @@ namespace ScoreMilk{
         public void walletConnected(string jsonData)
         {
             WalletConnectedData data = JsonConvert.DeserializeObject<WalletConnectedData>(jsonData);
-            ScoreMilk.Connection.Instance.walletConnectedCall(data.walletAddress);
+            ScoreMilk.Connection.Instance.WalletConnectedCall(data.walletAddress);
         }
 
         /// <summary>
@@ -45,14 +47,14 @@ namespace ScoreMilk{
         /// </summary>
         public void walletDisconnected()
         {
-            ScoreMilk.Connection.Instance.walletDisconnectedCall();
+            ScoreMilk.Connection.Instance.WalletDisconnectedCall();
         }
         /// <summary>
         /// Received message that indicates game should go to practice mode
         /// NOT necessary to call. Use event instead.
         /// </summary>
         void startPracticeGame(){
-            Connection.Instance.startPracticeGameCall();
+            Connection.Instance.StartPracticeGameCall();
         }
         /// <summary>
         /// Received before a real match starts
@@ -70,7 +72,7 @@ namespace ScoreMilk{
             {
                 Debug.Log(e.ToString());
             }
-            ScoreMilk.Connection.Instance.getReadyCall(data);
+            ScoreMilk.Connection.Instance.GetReadyCall(data);
         }
         /// <summary>
         /// Received message that indicates game can properly start
@@ -78,7 +80,7 @@ namespace ScoreMilk{
         /// </summary>
         void startRealGame() 
         {
-            Connection.Instance.startRealGameCall();
+            Connection.Instance.StartRealGameCall();
         }
         /// <summary>
         /// Called when match is cancelled
@@ -86,7 +88,7 @@ namespace ScoreMilk{
         /// </summary>
         public void quitToMenu()
         {
-            ScoreMilk.Connection.Instance.quitToMenuCall();
+            ScoreMilk.Connection.Instance.QuitToMenuCall();
         }
         /// <summary>
         /// Emits message to server that says the match ended. Accumulated points must be the same as added points
