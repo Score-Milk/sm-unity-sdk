@@ -44,7 +44,7 @@ public class GameControllerExample : MonoBehaviour
     /// Called when player pressed "play" button
     /// Game prepares itself for the match start and waits
     /// Do not start the match, only prepare for it
-    private void GetReady(object sender, EventArgs e){
+    private void GetReady(object sender, GetReadyData e){
         print("GetReady stuff here");
         var manager = GameObject.FindWithTag("GameManager");
         if (manager != null){
@@ -63,7 +63,7 @@ public class GameControllerExample : MonoBehaviour
     }
     /// Called when match has started properly
     /// Starts the match
-    private void StartRealGame(object sender, StartRealGameData e){
+    private void StartRealGame(object sender, EventArgs e){
         print("StartRealGame stuff here");
         SceneManager.LoadScene("RealGame");
     }

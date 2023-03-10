@@ -12,8 +12,8 @@ using OPS.AntiCheat.Field;
 namespace ScoreMilk{
     public class NetworkManager : Singleton<NetworkManager>
     {
-        private ProtectedString match_room_id = string.Empty;
-        private ProtectedString player_id = string.Empty;
+        private ProtectedString matchId = string.Empty;
+        private ProtectedString userId = string.Empty;
 
         // Initialization
         protected override void StartUp()
@@ -59,26 +59,26 @@ namespace ScoreMilk{
         /// NOT necessary to call in Unity
         /// </summary>
         void getReady(string json){
+            GetReadyData data = new GetReadyData();
             try
             {
-                PlayerData playerData = JsonUtility.FromJson<PlayerData>(json);
-                NetworkManager.Instance.match_room_id = playerData.match_room_id;
-                NetworkManager.Instance.player_id = playerData.player_id;
+                data = JsonUtility.FromJson<GetReadyData>(json);
+                NetworkManager.Instance.matchId = data.matchId;
+                NetworkManager.Instance.userId = data.userId;
             }
             catch (Exception e)
             {
                 Debug.Log(e.ToString());
             }
-            ScoreMilk.Connection.Instance.getReadyCall();
+            ScoreMilk.Connection.Instance.getReadyCall(data);
         }
         /// <summary>
         /// Received message that indicates game can properly start
         /// NOT necessary to call. Use event instead.
         /// </summary>
-        void startRealGame(string jsonData) 
+        void startRealGame() 
         {
-            StartRealGameData data = JsonConvert.DeserializeObject<StartRealGameData>(jsonData);
-            Connection.Instance.startRealGameCall(data);
+            Connection.Instance.startRealGameCall();
         }
         /// <summary>
         /// Called when match is cancelled
@@ -94,9 +94,9 @@ namespace ScoreMilk{
         /// </summary>
         public void EmitGameOver(int points)
         {
-            PlayerData data = new PlayerData();
-            data.match_room_id = NetworkManager.Instance.match_room_id;
-            data.player_id = NetworkManager.Instance.player_id;
+            HttpRequestData data = new HttpRequestData();
+            data.match_room_id = NetworkManager.Instance.matchId;
+            data.player_id = NetworkManager.Instance.userId;
 
             data.points = points.ToString();
 
@@ -107,11 +107,11 @@ namespace ScoreMilk{
         /// </summary>
         public void EmitAddScore(int score)
         {
-            PlayerData data = new PlayerData();
-            data.match_room_id = NetworkManager.Instance.match_room_id;
-            data.player_id = NetworkManager.Instance.player_id;
-
+            HttpRequestData data = new HttpRequestData();
+            data.match_room_id = NetworkManager.Instance.matchId;
+            data.player_id = NetworkManager.Instance.userId;
             data.points = score.ToString();
+
             WebConnection.Instance.Emit("/matches/player-score-game", data);
         }
         /// <summary>
@@ -119,9 +119,9 @@ namespace ScoreMilk{
         /// </summary>
         public void EmitReady()
         {
-            PlayerData data = new PlayerData();
-            data.match_room_id = NetworkManager.Instance.match_room_id;
-            data.player_id = NetworkManager.Instance.player_id;
+            HttpRequestData data = new HttpRequestData();
+            data.match_room_id = NetworkManager.Instance.matchId;
+            data.player_id = NetworkManager.Instance.userId;
             data.points = "";
 
             //Application.ExternalCall("socket.emit", "EMIT_READY", new JSONObject(data));
@@ -136,27 +136,21 @@ namespace ScoreMilk{
             EmitGameOver(0);
         }
     }
+
     [Serializable]
-    public class PlayerData {
-        public string match_room_id;
-        public string player_id;
-        public string address;
-        public string points;
-    }
-    
-    [Serializable]
-    public class WalletData {
-        public string match_room_id;
-        public string player_id;
-        public string address;
-        public string points;
-    }
-    
-    public class StartRealGameData {
+    public class GetReadyData {
+        public string matchId;
+        public string userId;
         public string name;
         public string username;
         public string avatar;
         public string bio;
+    }
+
+    public class HttpRequestData {
+        public string match_room_id;
+        public string player_id;
+        public string points;
     }
 
     class WalletConnectedData {

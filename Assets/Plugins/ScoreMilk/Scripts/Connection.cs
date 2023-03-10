@@ -21,7 +21,7 @@ public class Connection : Singleton<Connection>
         /// This is before the players accept their transactions.
         /// Match starts after both players have accepted transaction and sent "EmitReady()"
         /// </summary>
-        public static event EventHandler OnReceivedGetReady;
+        public static event EventHandler<GetReadyData> OnReceivedGetReady;
         /// <summary>
         /// Received event that player pressed "practice" button
         /// Game should start a practice game.
@@ -36,7 +36,7 @@ public class Connection : Singleton<Connection>
         /// Both players made the bets and are ready to play. 
         /// Game should start a real game.
         /// </summary>
-        public static event EventHandler<StartRealGameData> OnReceivedStartRealGame;
+        public static event EventHandler OnReceivedStartRealGame;
         /// <summary>
         /// Received event that wallet was connected
         /// Receives wallet id as string
@@ -102,17 +102,17 @@ public class Connection : Singleton<Connection>
         /// Called when matchmaking starts
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void getReadyCall()
+        public void getReadyCall(GetReadyData data)
         {
-            OnReceivedGetReady?.Invoke(this, EventArgs.Empty);
+            OnReceivedGetReady?.Invoke(this, data);
         }
         /// <summary>
         /// Received message that indicates game can properly start
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void startRealGameCall(StartRealGameData userData) 
+        public void startRealGameCall() 
         {
-            OnReceivedStartRealGame?.Invoke(this, userData);
+            OnReceivedStartRealGame?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Called when match is cancelled
