@@ -24,6 +24,14 @@ namespace ScoreMilk{
         {
             Application.ExternalCall("gameLoaded");
         }
+        static void EnableFullScreen()
+        {
+            Application.ExternalCall("enableFullScreen");
+        }
+        static void DisableFullScreen(){
+            Application.ExternalCall("disableFullScreen");
+        }
+        
         void setUrl(string jsonData)
         {
             Envs envs = JsonConvert.DeserializeObject<Envs>(jsonData);
