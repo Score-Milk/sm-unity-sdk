@@ -1,8 +1,6 @@
 /*
     These are internal functions of the Score Milk SDK.
     Do not use any of the functions in this file.
-
-    Variables that come from and functions called by the bridge are in camelCase
 */
 
 using System;
@@ -22,10 +20,18 @@ namespace ScoreMilk{
         {
             EmitGameLoaded();
         }
-        private void EmitGameLoaded()
+        static void EmitGameLoaded()
         {
             Application.ExternalCall("gameLoaded");
         }
+        static void EnableFullScreen()
+        {
+            Application.ExternalCall("enableFullScreen");
+        }
+        private void DisableFullScreen(){
+            Application.ExternalCall("disableFullScreen");
+        }
+        
         void setUrl(string jsonData)
         {
             Envs envs = JsonConvert.DeserializeObject<Envs>(jsonData);
@@ -38,7 +44,7 @@ namespace ScoreMilk{
         public void walletConnected(string jsonData)
         {
             WalletConnectedData data = JsonConvert.DeserializeObject<WalletConnectedData>(jsonData);
-            ScoreMilk.Connection.Instance.WalletConnectedCall(data.walletAddress);
+            ScoreMilk.Connection.Instance.walletConnectedCall(data.walletAddress);
         }
 
         /// <summary>
@@ -47,14 +53,14 @@ namespace ScoreMilk{
         /// </summary>
         public void walletDisconnected()
         {
-            ScoreMilk.Connection.Instance.WalletDisconnectedCall();
+            ScoreMilk.Connection.Instance.walletDisconnectedCall();
         }
         /// <summary>
         /// Received message that indicates game should go to practice mode
         /// NOT necessary to call. Use event instead.
         /// </summary>
         void startPracticeGame(){
-            Connection.Instance.StartPracticeGameCall();
+            Connection.Instance.startPracticeGameCall();
         }
         /// <summary>
         /// Received before a real match starts
@@ -72,7 +78,7 @@ namespace ScoreMilk{
             {
                 Debug.Log(e.ToString());
             }
-            ScoreMilk.Connection.Instance.GetReadyCall(data);
+            ScoreMilk.Connection.Instance.getReadyCall(data);
         }
         /// <summary>
         /// Received message that indicates game can properly start
@@ -80,7 +86,7 @@ namespace ScoreMilk{
         /// </summary>
         void startRealGame() 
         {
-            Connection.Instance.StartRealGameCall();
+            Connection.Instance.startRealGameCall();
         }
         /// <summary>
         /// Called when match is cancelled
@@ -88,7 +94,7 @@ namespace ScoreMilk{
         /// </summary>
         public void quitToMenu()
         {
-            ScoreMilk.Connection.Instance.QuitToMenuCall();
+            ScoreMilk.Connection.Instance.quitToMenuCall();
         }
         /// <summary>
         /// Emits message to server that says the match ended. Accumulated points must be the same as added points

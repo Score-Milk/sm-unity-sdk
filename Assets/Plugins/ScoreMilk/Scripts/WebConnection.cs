@@ -19,10 +19,10 @@ public class WebConnection : Singleton<WebConnection>
         url = _url;
     }
 
-    public void Emit(string name, HttpRequestData data){
+    public void Emit(string name, PlayerData data){
         StartCoroutine(GetText(url + name, data));
     }
-    IEnumerator GetText(string names, HttpRequestData data) {
+    IEnumerator GetText(string names, PlayerData data) {
         UnityWebRequest www = UnityWebRequest.Put(names, JsonUtility.ToJson(data));
         www.SetRequestHeader( "Content-type", "application/json");
         www.SetRequestHeader( "Authorization", data.player_id);
@@ -31,6 +31,11 @@ public class WebConnection : Singleton<WebConnection>
  
         if (www.result != UnityWebRequest.Result.Success) {
             Debug.Log(www.error);
+        }
+        else {
+            // Show results as text //temp
+            Debug.Log("got answer");
+            Debug.Log(www.downloadHandler.text); 
         }
     }
 

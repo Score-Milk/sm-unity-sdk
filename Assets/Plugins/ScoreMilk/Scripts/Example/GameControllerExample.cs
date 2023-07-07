@@ -9,17 +9,17 @@ public class GameControllerExample : MonoBehaviour
 # region Subscribing events
     // Subscribes events on start of Application
     private void OnEnable() {
-        ScoreMilk.Connection.OnReceivedGetReady += GetReady;
-        ScoreMilk.Connection.OnReceivedStartPracticeGame += StartPracticeGame;
-        ScoreMilk.Connection.OnReceivedQuitToMenu += QuitToMenu;
-        ScoreMilk.Connection.OnReceivedStartRealGame += StartRealGame;
+        ScoreMilk.Connection.OnReceivedMatchmakingStart += OnMatchmaking;
+        ScoreMilk.Connection.OnReceivedToPractice += OnReceivedPractice;
+        ScoreMilk.Connection.OnReceivedCancelMatch += OnMatchNotFound;
+        ScoreMilk.Connection.OnReceivedStart += OnReceivedStart;
     }
     // Unsubscribes events on end of Application
     private void OnDisable() {
-        ScoreMilk.Connection.OnReceivedGetReady -= GetReady;
-        ScoreMilk.Connection.OnReceivedStartPracticeGame -= StartPracticeGame;
-        ScoreMilk.Connection.OnReceivedQuitToMenu -= QuitToMenu;
-        ScoreMilk.Connection.OnReceivedStartRealGame -= StartRealGame;
+        ScoreMilk.Connection.OnReceivedMatchmakingStart -= OnMatchmaking;
+        ScoreMilk.Connection.OnReceivedToPractice -= OnReceivedPractice;
+        ScoreMilk.Connection.OnReceivedCancelMatch -= OnMatchNotFound;
+        ScoreMilk.Connection.OnReceivedStart -= OnReceivedStart;
     }
 # endregion
 
@@ -42,39 +42,31 @@ public class GameControllerExample : MonoBehaviour
 # region Events
 
     /// Called when player pressed "play" button
-    /// Game prepares itself for the match start and waits
-    /// Do not start the match, only prepare for it
-    private void GetReady(object sender, GetReadyData e){
-        print("GetReady stuff here");
+    /// Probably put here functions to change game scene to online game scene
+    private void OnMatchmaking(object sender, EventArgs e){
+        print("Matchmaking stuff here");
         var manager = GameObject.FindWithTag("GameManager");
         if (manager != null){
-            manager.SendMessage("GetReady");
+            manager.SendMessage("StartMatch");
         }
     }
     /// Called when player pressed "practice" button
-    private void StartPracticeGame(object sender, EventArgs e){
-        print("StartPracticeGame stuff here");
+    /// Probably put here functions to change game scene to practice game scene
+    private void OnReceivedPractice(object sender, EventArgs e){
+        print("OnReceivedPractice stuff here");
         SceneManager.LoadScene("PracticeGame");
     }
-    /// Called when an error occurs
-    private void QuitToMenu(object sender, EventArgs e){
-        print("QuitToMenu stuff here");
-        SceneManager.LoadScene("Menu");
+    /// Called when match has not started properly
+    /// Probably put here function to return to title scene
+    private void OnMatchNotFound(object sender, EventArgs e){
+        print("MatchNotFound stuff here");
+        SceneManager.LoadScene("Title");
     }
     /// Called when match has started properly
-    /// Starts the match
-    private void StartRealGame(object sender, EventArgs e){
-        print("StartRealGame stuff here");
-        SceneManager.LoadScene("RealGame");
-    }
-    /// Called when the user connects a wallet
-    private void AddWallet(object sender, string address){
-        print("AddWallet stuff here");
-    }
-    /// Called when the user disconnects the wallet
-    private void RemoveWallet(object sender, EventArgs e){
-        print("RemoveWallet stuff here");
-        SceneManager.LoadScene("RealGame");
+    /// Probably put here function to start online game
+    private void OnReceivedStart(object sender, EventArgs e){
+        print("ReceivedStart stuff here");
+        SceneManager.LoadScene("OnlineGame");
     }
 #endregion
 }
