@@ -51,10 +51,6 @@ private void OnDisable() {
 ```
 Note: Unsubscribing is not strictly necessary, but it's considered good practice.
 
-The information flow goes as follows:
-
-![Information Flow](TutorialImages/informationFlow.png)
-
  ### 6) Emit messages to server accordingly to game
 - You emit messages like this:
 ScoreMilk.Connection.EmitAddScore(points);
@@ -72,6 +68,10 @@ Location of code varies heavily accordingly with game
 Points can be positive or negative. Negative points decrease final value.
 
 Points emitted at GameOver must be the same as the sum of all points emitted previously.
+
+The information flow should go as follows:
+
+![Information Flow](TutorialImages/informationFlow.png)
 
  ### 7) You are done!
 
