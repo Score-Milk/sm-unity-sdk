@@ -20,7 +20,7 @@ namespace ScoreMilk{
         {
             EmitGameLoaded();
         }
-        private void EmitGameLoaded()
+        static void EmitGameLoaded()
         {
             Application.ExternalCall("gameLoaded");
         }
@@ -28,7 +28,7 @@ namespace ScoreMilk{
         {
             Application.ExternalCall("enableFullScreen");
         }
-        static void DisableFullScreen(){
+        private void DisableFullScreen(){
             Application.ExternalCall("disableFullScreen");
         }
         
