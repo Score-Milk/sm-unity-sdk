@@ -5,9 +5,14 @@ window.gameLoaded = () => {
 	window.parent.postMessage({
 		message: 'gameLoaded',
 		data: {
-			version: '0.2.2',
+			version: '0.2.3',
 			platform: 'Unity'
 		}
+	}, "*");
+};
+window.heartBeat = () => {
+	window.parent.postMessage({
+		message: 'heartBeat',
 	}, "*");
 };
 window.enableFullScreen = () => {
