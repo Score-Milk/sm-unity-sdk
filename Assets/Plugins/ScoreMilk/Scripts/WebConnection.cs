@@ -26,7 +26,7 @@ public class WebConnection : Singleton<WebConnection>
         EncryptedHttpRequestData encryptedData = new EncryptedHttpRequestData();
         encryptedData.data = ScoreMilk.Encryption.Encrypt(JsonUtility.ToJson(data));
 
-        UnityWebRequest www = UnityWebRequest.Post(names, JsonUtility.ToJson(encryptedData));
+        UnityWebRequest www = UnityWebRequest.Put(names, JsonUtility.ToJson(encryptedData));
         www.SetRequestHeader( "Content-type", "application/json");
         www.SetRequestHeader( "Authorization", data.player_id);
         
