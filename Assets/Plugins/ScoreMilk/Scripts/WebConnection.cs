@@ -23,7 +23,7 @@ public class WebConnection : Singleton<WebConnection>
         StartCoroutine(GetText(url + name, data));
     }
     IEnumerator GetText(string names, HttpRequestData data) {
-        UnityWebRequest www = UnityWebRequest.Put(names, JsonUtility.ToJson(data));
+        UnityWebRequest www = UnityWebRequest.Post(names, JsonUtility.ToJson(data));
         www.SetRequestHeader( "Content-type", "application/json");
         www.SetRequestHeader( "Authorization", data.player_id);
         
