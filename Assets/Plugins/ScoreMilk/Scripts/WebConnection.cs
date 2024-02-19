@@ -29,6 +29,7 @@ public class WebConnection : Singleton<WebConnection>
         UnityWebRequest www = UnityWebRequest.Put(names, JsonUtility.ToJson(encryptedData));
         www.SetRequestHeader( "Content-type", "application/json");
         www.SetRequestHeader( "Authorization", data.player_id);
+        www.SetRequestHeader("SM-APP", "SDK-0.2.4+");
         
         yield return www.SendWebRequest();
  
