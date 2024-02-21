@@ -23,9 +23,13 @@ public class WebConnection : Singleton<WebConnection>
         StartCoroutine(GetText(url + name, data));
     }
     IEnumerator GetText(string names, HttpRequestData data) {
-        UnityWebRequest www = UnityWebRequest.Put(names, JsonUtility.ToJson(data));
+        EncryptedHttpRequestData encryptedData = new EncryptedHttpRequestData();
+        encryptedData.data = ScoreMilk.Encryption.Encrypt(JsonUtility.ToJson(data));
+
+        UnityWebRequest www = UnityWebRequest.Put(names, JsonUtility.ToJson(encryptedData));
         www.SetRequestHeader( "Content-type", "application/json");
         www.SetRequestHeader( "Authorization", data.player_id);
+        www.SetRequestHeader("SM-APP", "SDK-0.2.4+");
         
         yield return www.SendWebRequest();
  
@@ -33,7 +37,10 @@ public class WebConnection : Singleton<WebConnection>
             Debug.Log(www.error);
         }
     }
-
-
 }
+}
+
+[Serializable]
+public class EncryptedHttpRequestData {
+    public string data;
 }

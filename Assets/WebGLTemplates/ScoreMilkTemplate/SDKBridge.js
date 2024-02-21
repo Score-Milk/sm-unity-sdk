@@ -10,11 +10,7 @@ window.gameLoaded = () => {
 		}
 	}, "*");
 };
-window.heartBeat = () => {
-	window.parent.postMessage({
-		message: 'heartBeat',
-	}, "*");
-};
+
 window.enableFullScreen = () => {
 	window.unityInstance.SetFullscreen(1);
 };

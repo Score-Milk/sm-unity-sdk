@@ -5,7 +5,6 @@
 
 using System;
 using UnityEngine;
-using Newtonsoft.Json;
 
 using OPS.AntiCheat.Field;
 
@@ -34,7 +33,7 @@ namespace ScoreMilk{
         
         void setUrl(string jsonData)
         {
-            Envs envs = JsonConvert.DeserializeObject<Envs>(jsonData);
+            Envs envs = JsonUtility.FromJson<Envs>(jsonData);
             WebConnection.Instance.SetUrl(envs.API_URL);
         }
         /// <summary>
@@ -43,7 +42,7 @@ namespace ScoreMilk{
         /// </summary>
         public void walletConnected(string jsonData)
         {
-            WalletConnectedData data = JsonConvert.DeserializeObject<WalletConnectedData>(jsonData);
+            WalletConnectedData data = JsonUtility.FromJson<WalletConnectedData>(jsonData);
             ScoreMilk.Connection.Instance.walletConnectedCall(data.walletAddress);
         }
 
