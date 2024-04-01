@@ -41,12 +41,13 @@ private void OnDisable() {
 }
 ```
 - You have to Subscribe/Unsubscribe to 4 events:
-    - `ScoreMilk.Connection.OnGetReady` // Player pressed "play" button. Game should go to real match scene and wait for start.
-    - `ScoreMilk.Connection.OnStartPracticeGame` // Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
-    - `ScoreMilk.Connection.OnQuitToMenu` // Match was cancelled for any reason. Game should go back previous scene or title.
-    - `ScoreMilk.Connection.OnStartRealGame` // Both players are ready and accepted the required crypto transaction. Game should continue and start match.
-    - `ScoreMilk.Connection.OnLogin`:  User logged in. Sends user data in the event
-    - `ScoreMilk.Connection.OnLogout`:  User logged out
+    - `ScoreMilk.Connection.OnInit` - Received as soon as the game calls the `gameLoaded` function.
+    - `ScoreMilk.Connection.OnGetReady` - Player pressed "play" button. Game should go to real match scene and wait for start.
+    - `ScoreMilk.Connection.OnStartPracticeGame` - Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
+    - `ScoreMilk.Connection.OnQuitToMenu` - Match was cancelled for any reason. Game should go back previous scene or title.
+    - `ScoreMilk.Connection.OnStartRealGame` - Both players are ready and accepted the required crypto transaction. Game should continue and start match.
+    - `ScoreMilk.Connection.OnLogin` - User logged in. Sends user data in the event
+    - `ScoreMilk.Connection.OnLogout` - User logged out
 
  ### 6) Emit messages to server accordingly to game
 - You emit messages like this:

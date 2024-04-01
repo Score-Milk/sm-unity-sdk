@@ -13,6 +13,9 @@ public class GameControllerExample : MonoBehaviour
         ScoreMilk.Connection.OnStartPracticeGame += StartPracticeGame;
         ScoreMilk.Connection.OnQuitToMenu += QuitToMenu;
         ScoreMilk.Connection.OnStartRealGame += StartRealGame;
+        ScoreMilk.Connection.OnStart += Init;
+        ScoreMilk.Connection.OnLogin += Login;
+        ScoreMilk.Connection.OnLogout += Logout;
     }
     // Unsubscribes to events on end of Application
     private void OnDisable() {
@@ -20,6 +23,9 @@ public class GameControllerExample : MonoBehaviour
         ScoreMilk.Connection.OnStartPracticeGame -= StartPracticeGame;
         ScoreMilk.Connection.OnQuitToMenu -= QuitToMenu;
         ScoreMilk.Connection.OnStartRealGame -= StartRealGame;
+        ScoreMilk.Connection.OnStart -= Init;
+        ScoreMilk.Connection.OnLogin -= Login;
+        ScoreMilk.Connection.OnLogout -= Logout;
     }
 # endregion
 
@@ -40,6 +46,10 @@ public class GameControllerExample : MonoBehaviour
 #endregion
 
 # region Events
+
+    private void Init(object sender, StartData e) { 
+        print(e.ENVIRONMENT);
+    }
 
     /// Called when player pressed "play" button
     /// Game prepares itself for the match start and waits
@@ -68,12 +78,12 @@ public class GameControllerExample : MonoBehaviour
         SceneManager.LoadScene("RealGame");
     }
     /// Called when the user connects a wallet
-    private void AddWallet(object sender, string address){
-        print("AddWallet stuff here");
+    private void Login(object sender, LoginData e){
+        print("Login stuff here");
     }
     /// Called when the user disconnects the wallet
-    private void RemoveWallet(object sender, EventArgs e){
-        print("RemoveWallet stuff here");
+    private void Logout(object sender, EventArgs e){
+        print("Logout stuff here");
         SceneManager.LoadScene("RealGame");
     }
 #endregion
