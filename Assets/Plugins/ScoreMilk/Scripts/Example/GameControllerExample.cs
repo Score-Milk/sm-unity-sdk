@@ -7,19 +7,19 @@ namespace ScoreMilk.Example{
 public class GameControllerExample : MonoBehaviour
 {
 # region Subscribing events
-    // Subscribes events on start of Application
+    // Subscribes to events on start of Application
     private void OnEnable() {
-        ScoreMilk.Connection.OnReceivedGetReady += GetReady;
-        ScoreMilk.Connection.OnReceivedStartPracticeGame += StartPracticeGame;
-        ScoreMilk.Connection.OnReceivedQuitToMenu += QuitToMenu;
-        ScoreMilk.Connection.OnReceivedStartRealGame += StartRealGame;
+        ScoreMilk.Connection.OnGetReady += GetReady;
+        ScoreMilk.Connection.OnStartPracticeGame += StartPracticeGame;
+        ScoreMilk.Connection.OnQuitToMenu += QuitToMenu;
+        ScoreMilk.Connection.OnStartRealGame += StartRealGame;
     }
-    // Unsubscribes events on end of Application
+    // Unsubscribes to events on end of Application
     private void OnDisable() {
-        ScoreMilk.Connection.OnReceivedGetReady -= GetReady;
-        ScoreMilk.Connection.OnReceivedStartPracticeGame -= StartPracticeGame;
-        ScoreMilk.Connection.OnReceivedQuitToMenu -= QuitToMenu;
-        ScoreMilk.Connection.OnReceivedStartRealGame -= StartRealGame;
+        ScoreMilk.Connection.OnGetReady -= GetReady;
+        ScoreMilk.Connection.OnStartPracticeGame -= StartPracticeGame;
+        ScoreMilk.Connection.OnQuitToMenu -= QuitToMenu;
+        ScoreMilk.Connection.OnStartRealGame -= StartRealGame;
     }
 # endregion
 

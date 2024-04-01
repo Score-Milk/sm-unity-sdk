@@ -21,31 +21,31 @@ public class Connection : Singleton<Connection>
         /// This is before the players accept their transactions.
         /// Match starts after both players have accepted transaction and sent "EmitReady()"
         /// </summary>
-        public static event EventHandler<GetReadyData> OnReceivedGetReady;
+        public static event EventHandler<GetReadyData> OnGetReady;
         /// <summary>
         /// Received event that player pressed "practice" button
         /// Game should start a practice game.
         /// </summary>
-        public static event EventHandler OnReceivedStartPracticeGame;
+        public static event EventHandler OnStartPracticeGame;
         /// <summary>
         /// Match was cancelled.
         /// Game should go back to the menu.
         /// </summary>
-        public static event EventHandler OnReceivedQuitToMenu;
+        public static event EventHandler OnQuitToMenu;
         /// <summary>
         /// Both players made the bets and are ready to play. 
         /// Game should start a real game.
         /// </summary>
-        public static event EventHandler OnReceivedStartRealGame;
+        public static event EventHandler OnStartRealGame;
         /// <summary>
         /// Received event that wallet was connected
         /// Receives wallet id as string
         /// </summary>
-        public static event EventHandler<LoginData> OnReceivedLogin;
+        public static event EventHandler<LoginData> OnLogin;
         /// <summary>
         /// Received event that wallet was disconnected
         /// </summary>
-        public static event EventHandler OnReceivedLogout;
+        public static event EventHandler OnLogout;
 
 
     // Emit functions
@@ -82,7 +82,7 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public void loginCall(LoginData data)
         {
-            OnReceivedLogin?.Invoke(this, data);
+            OnLogin?.Invoke(this, data);
         }
         /// <summary>
         /// Called when wallet disconnects
@@ -90,14 +90,14 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public void logoutCall()
         {
-            OnReceivedLogout?.Invoke(this, EventArgs.Empty);
+            OnLogout?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Received message that indicates game should go to practice mode
         /// This is an internal function, the game should ignore it
         /// </summary>
         public void startPracticeGameCall(){
-            OnReceivedStartPracticeGame?.Invoke(this, EventArgs.Empty);
+            OnStartPracticeGame?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Called when matchmaking starts
@@ -105,7 +105,7 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public void getReadyCall(GetReadyData data)
         {
-            OnReceivedGetReady?.Invoke(this, data);
+            OnGetReady?.Invoke(this, data);
         }
         /// <summary>
         /// Received message that indicates game can properly start
@@ -113,7 +113,7 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public void startRealGameCall() 
         {
-            OnReceivedStartRealGame?.Invoke(this, EventArgs.Empty);
+            OnStartRealGame?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Called when match is cancelled
@@ -121,7 +121,7 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public void quitToMenuCall()
         {
-            OnReceivedQuitToMenu?.Invoke(this, EventArgs.Empty);
+            OnQuitToMenu?.Invoke(this, EventArgs.Empty);
         }
 }
 }
