@@ -41,11 +41,11 @@ public class Connection : Singleton<Connection>
         /// Received event that wallet was connected
         /// Receives wallet id as string
         /// </summary>
-        public static event EventHandler<string> OnReceivedWalletConnected;
+        public static event EventHandler<LoginData> OnReceivedLogin;
         /// <summary>
         /// Received event that wallet was disconnected
         /// </summary>
-        public static event EventHandler OnReceivedWalletDisconnected;
+        public static event EventHandler OnReceivedLogout;
 
 
     // Emit functions
@@ -80,17 +80,17 @@ public class Connection : Singleton<Connection>
         /// Called when wallet connects
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void walletConnectedCall(string walletAddress)
+        public void loginCall(LoginData data)
         {
-            OnReceivedWalletConnected?.Invoke(this, walletAddress);
+            OnReceivedLogin?.Invoke(this, data);
         }
         /// <summary>
         /// Called when wallet disconnects
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void walletDisconnectedCall()
+        public void logoutCall()
         {
-            OnReceivedWalletDisconnected?.Invoke(this, EventArgs.Empty);
+            OnReceivedLogout?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Received message that indicates game should go to practice mode
