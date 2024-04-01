@@ -13,7 +13,7 @@ public class GameControllerExample : MonoBehaviour
         ScoreMilk.Connection.OnStartPracticeGame += StartPracticeGame;
         ScoreMilk.Connection.OnQuitToMenu += QuitToMenu;
         ScoreMilk.Connection.OnStartRealGame += StartRealGame;
-        ScoreMilk.Connection.OnStart += Init;
+        ScoreMilk.Connection.OnInit += Init;
         ScoreMilk.Connection.OnLogin += Login;
         ScoreMilk.Connection.OnLogout += Logout;
     }
@@ -23,7 +23,7 @@ public class GameControllerExample : MonoBehaviour
         ScoreMilk.Connection.OnStartPracticeGame -= StartPracticeGame;
         ScoreMilk.Connection.OnQuitToMenu -= QuitToMenu;
         ScoreMilk.Connection.OnStartRealGame -= StartRealGame;
-        ScoreMilk.Connection.OnStart -= Init;
+        ScoreMilk.Connection.OnInit -= Init;
         ScoreMilk.Connection.OnLogin -= Login;
         ScoreMilk.Connection.OnLogout -= Logout;
     }
@@ -47,7 +47,7 @@ public class GameControllerExample : MonoBehaviour
 
 # region Events
 
-    private void Init(object sender, StartData e) { 
+    private void Init(object sender, InitData e) { 
         print(e.ENVIRONMENT);
     }
 

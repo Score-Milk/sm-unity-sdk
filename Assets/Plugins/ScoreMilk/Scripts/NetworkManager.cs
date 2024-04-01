@@ -30,11 +30,11 @@ namespace ScoreMilk{
         private void DisableFullScreen(){
             Application.ExternalCall("disableFullScreen");
         }
-        void start(string jsonData)
+        void init(string jsonData)
         {
-            StartData data = JsonUtility.FromJson<StartData>(jsonData);
+            InitData data = JsonUtility.FromJson<InitData>(jsonData);
             WebConnection.Instance.SetUrl(data.API_URL);
-            ScoreMilk.Connection.Instance.startCall(data);
+            ScoreMilk.Connection.Instance.initCall(data);
         }
         /// <summary>
         /// Called when wallet connects 
@@ -165,7 +165,7 @@ namespace ScoreMilk{
         public string bio;
     }
 
-    public class StartData {
+    public class InitData {
         public string ENVIRONMENT;
         public string API_URL;
     }

@@ -21,7 +21,7 @@ public class Connection : Singleton<Connection>
         /// You can use this information to enable debug features on development
         /// Or change certain values like a backend server URL
         /// </summary>
-        public static event EventHandler<StartData> OnStart;
+        public static event EventHandler<InitData> OnInit;
         /// <summary>
         /// Received event that player pressed "play" button
         /// Game should go to real match scene and wait for start.
@@ -89,9 +89,9 @@ public class Connection : Singleton<Connection>
         /// Called after the frontend receives the gameLoaded call
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void startCall(StartData data)
+        public void initCall(InitData data)
         {
-            OnStart?.Invoke(this, data);
+            OnInit?.Invoke(this, data);
         }
 
         /// <summary>
