@@ -16,6 +16,13 @@ public class Connection : Singleton<Connection>
     // Events
     // The game should subscribe to them
         /// <summary>
+        /// Received event that sends to the game the current environment
+        /// Environment values are "production" and "development"
+        /// You can use this information to enable debug features on development
+        /// Or change certain values like a backend server URL
+        /// </summary>
+        public static event EventHandler<StartData> OnStart;
+        /// <summary>
         /// Received event that player pressed "play" button
         /// Game should go to real match scene and wait for start.
         /// This is before the players accept their transactions.
@@ -47,7 +54,6 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public static event EventHandler OnLogout;
 
-
     // Emit functions
     // The game should call them
 
@@ -58,6 +64,7 @@ public class Connection : Singleton<Connection>
         {
             NetworkManager.Instance.EmitAddScore(score);
         }
+
         /// <summary>
         /// Emits message to server that says the match ended. Accumulated points must be the same as added points
         /// points: total points acquired during match
@@ -66,6 +73,7 @@ public class Connection : Singleton<Connection>
         {
             NetworkManager.Instance.EmitGameOver(points);
         }
+
         /// <summary>
         /// Emits message to server that says player is ready to start match
         /// </summary>
@@ -76,6 +84,16 @@ public class Connection : Singleton<Connection>
 
     // Internal functions
     // The game should ignore these
+
+        /// <summary>
+        /// Called after the frontend receives the gameLoaded call
+        /// This is an internal function, the game should ignore it
+        /// </summary>
+        public void startCall(StartData data)
+        {
+            OnStart?.Invoke(this, data);
+        }
+
         /// <summary>
         /// Called when wallet connects
         /// This is an internal function, the game should ignore it
