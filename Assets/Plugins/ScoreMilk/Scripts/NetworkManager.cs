@@ -145,6 +145,9 @@ namespace ScoreMilk{
         }
     }
 
+    // We could remove this class and use the string
+    // But this class will have more utility in the future
+    // We will pass to the game a user-match token for authentication
     [Serializable]
     public class GetReadyData {
         public string matchId;
