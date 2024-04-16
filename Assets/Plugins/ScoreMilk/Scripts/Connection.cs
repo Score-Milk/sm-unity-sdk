@@ -16,37 +16,43 @@ public class Connection : Singleton<Connection>
     // Events
     // The game should subscribe to them
         /// <summary>
+        /// Received event that sends to the game the current environment
+        /// Environment values are "production" and "development"
+        /// You can use this information to enable debug features on development
+        /// Or change certain values like a backend server URL
+        /// </summary>
+        public static event EventHandler<InitData> OnInit;
+        /// <summary>
         /// Received event that player pressed "play" button
         /// Game should go to real match scene and wait for start.
         /// This is before the players accept their transactions.
         /// Match starts after both players have accepted transaction and sent "EmitReady()"
         /// </summary>
-        public static event EventHandler<GetReadyData> OnReceivedGetReady;
+        public static event EventHandler<GetReadyData> OnGetReady;
         /// <summary>
         /// Received event that player pressed "practice" button
         /// Game should start a practice game.
         /// </summary>
-        public static event EventHandler OnReceivedStartPracticeGame;
+        public static event EventHandler OnStartPracticeGame;
         /// <summary>
         /// Match was cancelled.
         /// Game should go back to the menu.
         /// </summary>
-        public static event EventHandler OnReceivedQuitToMenu;
+        public static event EventHandler OnQuitToMenu;
         /// <summary>
         /// Both players made the bets and are ready to play. 
         /// Game should start a real game.
         /// </summary>
-        public static event EventHandler OnReceivedStartRealGame;
+        public static event EventHandler OnStartRealGame;
         /// <summary>
         /// Received event that wallet was connected
         /// Receives wallet id as string
         /// </summary>
-        public static event EventHandler<string> OnReceivedWalletConnected;
+        public static event EventHandler<LoginData> OnLogin;
         /// <summary>
         /// Received event that wallet was disconnected
         /// </summary>
-        public static event EventHandler OnReceivedWalletDisconnected;
-
+        public static event EventHandler OnLogout;
 
     // Emit functions
     // The game should call them
@@ -58,6 +64,7 @@ public class Connection : Singleton<Connection>
         {
             NetworkManager.Instance.EmitAddScore(score);
         }
+
         /// <summary>
         /// Emits message to server that says the match ended. Accumulated points must be the same as added points
         /// points: total points acquired during match
@@ -66,6 +73,7 @@ public class Connection : Singleton<Connection>
         {
             NetworkManager.Instance.EmitGameOver(points);
         }
+
         /// <summary>
         /// Emits message to server that says player is ready to start match
         /// </summary>
@@ -76,28 +84,38 @@ public class Connection : Singleton<Connection>
 
     // Internal functions
     // The game should ignore these
+
+        /// <summary>
+        /// Called after the frontend receives the gameLoaded call
+        /// This is an internal function, the game should ignore it
+        /// </summary>
+        public void initCall(InitData data)
+        {
+            OnInit?.Invoke(this, data);
+        }
+
         /// <summary>
         /// Called when wallet connects
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void walletConnectedCall(string walletAddress)
+        public void loginCall(LoginData data)
         {
-            OnReceivedWalletConnected?.Invoke(this, walletAddress);
+            OnLogin?.Invoke(this, data);
         }
         /// <summary>
         /// Called when wallet disconnects
         /// This is an internal function, the game should ignore it
         /// </summary>
-        public void walletDisconnectedCall()
+        public void logoutCall()
         {
-            OnReceivedWalletDisconnected?.Invoke(this, EventArgs.Empty);
+            OnLogout?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Received message that indicates game should go to practice mode
         /// This is an internal function, the game should ignore it
         /// </summary>
         public void startPracticeGameCall(){
-            OnReceivedStartPracticeGame?.Invoke(this, EventArgs.Empty);
+            OnStartPracticeGame?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Called when matchmaking starts
@@ -105,7 +123,7 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public void getReadyCall(GetReadyData data)
         {
-            OnReceivedGetReady?.Invoke(this, data);
+            OnGetReady?.Invoke(this, data);
         }
         /// <summary>
         /// Received message that indicates game can properly start
@@ -113,7 +131,7 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public void startRealGameCall() 
         {
-            OnReceivedStartRealGame?.Invoke(this, EventArgs.Empty);
+            OnStartRealGame?.Invoke(this, EventArgs.Empty);
         }
         /// <summary>
         /// Called when match is cancelled
@@ -121,7 +139,7 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public void quitToMenuCall()
         {
-            OnReceivedQuitToMenu?.Invoke(this, EventArgs.Empty);
+            OnQuitToMenu?.Invoke(this, EventArgs.Empty);
         }
 }
 }

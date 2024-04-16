@@ -33,23 +33,21 @@ Note: If you don’t find this option or it is disabled, please install WebGL bu
 - You Subscribe events in a GameObject as shown below:
 ```
 private void OnEnable() {
-    ScoreMilk.Connection.OnReceivedGetReady += OnMatchmaking;
+    ScoreMilk.Connection.OnGetReady += OnMatchmaking;
 }
 
 private void OnDisable() {
-    ScoreMilk.Connection.OnReceivedGetReady -= OnMatchmaking;
+    ScoreMilk.Connection.OnGetReady -= OnMatchmaking;
 }
 ```
 - You have to Subscribe/Unsubscribe to 4 events:
-```
-    ScoreMilk.Connection.OnReceivedGetReady // Player pressed "play" button. Game should go to real match scene and wait for start.
-    ScoreMilk.Connection.OnReceivedStartPracticeGame // Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
-    ScoreMilk.Connection.OnReceivedQuitToMenu // Match was cancelled for any reason. Game should go back previous scene or title.
-    ScoreMilk.Connection.OnReceivedStartRealGame // Both players are ready and accepted the required crypto transaction. Game should continue and start match.
-    ScoreMilk.Connection.OnReceivedWalletConnected //  Wallet connected. Sends wallet address in event
-    ScoreMilk.Connection.OnReceivedWalletDisconnected //  Wallet disconnected
-```
-Note: Unsubscribing is not strictly necessary, but it's considered good practice.
+    - `ScoreMilk.Connection.OnInit` - Received as soon as the game calls the `gameLoaded` function.
+    - `ScoreMilk.Connection.OnGetReady` - Player pressed "play" button. Game should go to real match scene and wait for start.
+    - `ScoreMilk.Connection.OnStartPracticeGame` - Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
+    - `ScoreMilk.Connection.OnQuitToMenu` - Match was cancelled for any reason. Game should go back previous scene or title.
+    - `ScoreMilk.Connection.OnStartRealGame` - Both players are ready and accepted the required crypto transaction. Game should continue and start match.
+    - `ScoreMilk.Connection.OnLogin` - User logged in. Sends user data in the event
+    - `ScoreMilk.Connection.OnLogout` - User logged out
 
  ### 6) Emit messages to server accordingly to game
 - You emit messages like this:

@@ -7,19 +7,25 @@ namespace ScoreMilk.Example{
 public class GameControllerExample : MonoBehaviour
 {
 # region Subscribing events
-    // Subscribes events on start of Application
+    // Subscribes to events on start of Application
     private void OnEnable() {
-        ScoreMilk.Connection.OnReceivedGetReady += GetReady;
-        ScoreMilk.Connection.OnReceivedStartPracticeGame += StartPracticeGame;
-        ScoreMilk.Connection.OnReceivedQuitToMenu += QuitToMenu;
-        ScoreMilk.Connection.OnReceivedStartRealGame += StartRealGame;
+        ScoreMilk.Connection.OnGetReady += GetReady;
+        ScoreMilk.Connection.OnStartPracticeGame += StartPracticeGame;
+        ScoreMilk.Connection.OnQuitToMenu += QuitToMenu;
+        ScoreMilk.Connection.OnStartRealGame += StartRealGame;
+        ScoreMilk.Connection.OnInit += Init;
+        ScoreMilk.Connection.OnLogin += Login;
+        ScoreMilk.Connection.OnLogout += Logout;
     }
-    // Unsubscribes events on end of Application
+    // Unsubscribes to events on end of Application
     private void OnDisable() {
-        ScoreMilk.Connection.OnReceivedGetReady -= GetReady;
-        ScoreMilk.Connection.OnReceivedStartPracticeGame -= StartPracticeGame;
-        ScoreMilk.Connection.OnReceivedQuitToMenu -= QuitToMenu;
-        ScoreMilk.Connection.OnReceivedStartRealGame -= StartRealGame;
+        ScoreMilk.Connection.OnGetReady -= GetReady;
+        ScoreMilk.Connection.OnStartPracticeGame -= StartPracticeGame;
+        ScoreMilk.Connection.OnQuitToMenu -= QuitToMenu;
+        ScoreMilk.Connection.OnStartRealGame -= StartRealGame;
+        ScoreMilk.Connection.OnInit -= Init;
+        ScoreMilk.Connection.OnLogin -= Login;
+        ScoreMilk.Connection.OnLogout -= Logout;
     }
 # endregion
 
@@ -40,6 +46,10 @@ public class GameControllerExample : MonoBehaviour
 #endregion
 
 # region Events
+
+    private void Init(object sender, InitData e) { 
+        print(e.ENVIRONMENT);
+    }
 
     /// Called when player pressed "play" button
     /// Game prepares itself for the match start and waits
@@ -68,12 +78,12 @@ public class GameControllerExample : MonoBehaviour
         SceneManager.LoadScene("RealGame");
     }
     /// Called when the user connects a wallet
-    private void AddWallet(object sender, string address){
-        print("AddWallet stuff here");
+    private void Login(object sender, LoginData e){
+        print("Login stuff here");
     }
     /// Called when the user disconnects the wallet
-    private void RemoveWallet(object sender, EventArgs e){
-        print("RemoveWallet stuff here");
+    private void Logout(object sender, EventArgs e){
+        print("Logout stuff here");
         SceneManager.LoadScene("RealGame");
     }
 #endregion

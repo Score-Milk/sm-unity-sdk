@@ -30,29 +30,31 @@ namespace ScoreMilk{
         private void DisableFullScreen(){
             Application.ExternalCall("disableFullScreen");
         }
-        
-        void setUrl(string jsonData)
+        void init(string jsonData)
         {
-            Envs envs = JsonUtility.FromJson<Envs>(jsonData);
-            WebConnection.Instance.SetUrl(envs.API_URL);
+            InitData data = JsonUtility.FromJson<InitData>(jsonData);
+            WebConnection.Instance.SetUrl(data.API_URL);
+            ScoreMilk.Connection.Instance.initCall(data);
         }
         /// <summary>
         /// Called when wallet connects 
         /// NOT necessary to call in Unity
         /// </summary>
-        public void walletConnected(string jsonData)
+        public void login(string jsonData)
         {
-            WalletConnectedData data = JsonUtility.FromJson<WalletConnectedData>(jsonData);
-            ScoreMilk.Connection.Instance.walletConnectedCall(data.walletAddress);
+            LoginData data = JsonUtility.FromJson<LoginData>(jsonData);
+            NetworkManager.Instance.userId = data.userId;
+            ScoreMilk.Connection.Instance.loginCall(data);
         }
 
         /// <summary>
         /// Called when wallet disconnects
         /// NOT necessary to call in Unity
         /// </summary>
-        public void walletDisconnected()
+        public void logout()
         {
-            ScoreMilk.Connection.Instance.walletDisconnectedCall();
+            NetworkManager.Instance.userId = null;
+            ScoreMilk.Connection.Instance.logoutCall();
         }
         /// <summary>
         /// Received message that indicates game should go to practice mode
@@ -71,7 +73,6 @@ namespace ScoreMilk{
             {
                 data = JsonUtility.FromJson<GetReadyData>(json);
                 NetworkManager.Instance.matchId = data.matchId;
-                NetworkManager.Instance.userId = data.userId;
             }
             catch (Exception e)
             {
@@ -144,14 +145,12 @@ namespace ScoreMilk{
         }
     }
 
+    // We could remove this class and use the string
+    // But this class will have more utility in the future
+    // We will pass to the game a user-match token for authentication
     [Serializable]
     public class GetReadyData {
         public string matchId;
-        public string userId;
-        public string name;
-        public string username;
-        public string avatar;
-        public string bio;
     }
 
     public class HttpRequestData {
@@ -160,11 +159,17 @@ namespace ScoreMilk{
         public string points;
     }
 
-    class WalletConnectedData {
+    public class LoginData {
         public string walletAddress;
+        public string userId;
+        public string name;
+        public string username;
+        public string avatar;
+        public string bio;
     }
-    
-    class Envs {
+
+    public class InitData {
+        public string ENVIRONMENT;
         public string API_URL;
     }
 }
