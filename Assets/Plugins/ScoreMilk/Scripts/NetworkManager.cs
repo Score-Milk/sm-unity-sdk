@@ -1,6 +1,7 @@
 /*
-    These are internal functions of the Score Milk SDK.
-    Do not use any of the functions in this file.
+    These are internal methods of the Score Milk SDK.
+    Only consume the following methods in your game:
+    EmitGameOver, EmitAddScore, EmitReady
 */
 
 using System;
@@ -19,21 +20,26 @@ namespace ScoreMilk{
         {
             EmitGameLoaded();
         }
+
         static void EmitGameLoaded()
         {
             Application.ExternalCall("gameLoaded");
         }
+
+        /// <summary>
+        /// Called after the frontend receives the gameLoaded call 
+        /// </summary>
         void init(string jsonData)
         {
             InitData data = JsonUtility.FromJson<InitData>(jsonData);
             WebConnection.Instance.SetUrl(data.API_URL);
             ScoreMilk.Connection.Instance.initCall(data);
         }
+
         /// <summary>
-        /// Called when wallet connects 
-        /// NOT necessary to call in Unity
+        /// Called when the user logs in
         /// </summary>
-        public void login(string jsonData)
+        void login(string jsonData)
         {
             LoginData data = JsonUtility.FromJson<LoginData>(jsonData);
             NetworkManager.Instance.userId = data.userId;
@@ -41,24 +47,23 @@ namespace ScoreMilk{
         }
 
         /// <summary>
-        /// Called when wallet disconnects
-        /// NOT necessary to call in Unity
+        /// Called when the user logs out
         /// </summary>
         public void logout()
         {
             NetworkManager.Instance.userId = null;
             ScoreMilk.Connection.Instance.logoutCall();
         }
+
         /// <summary>
-        /// Received message that indicates game should go to practice mode
-        /// NOT necessary to call. Use event instead.
+        /// Received when the user clicks the practice button
         /// </summary>
         void startPracticeGame(){
             Connection.Instance.startPracticeGameCall();
         }
+
         /// <summary>
-        /// Received before a real match starts
-        /// NOT necessary to call in Unity
+        /// Received when the user finds an opponent
         /// </summary>
         void getReady(string json){
             GetReadyData data = new GetReadyData();
@@ -73,24 +78,39 @@ namespace ScoreMilk{
             }
             ScoreMilk.Connection.Instance.getReadyCall(data);
         }
+
         /// <summary>
-        /// Received message that indicates game can properly start
-        /// NOT necessary to call. Use event instead.
+        /// Received after both users pay the wage
         /// </summary>
         void startRealGame() 
         {
             Connection.Instance.startRealGameCall();
         }
+
         /// <summary>
         /// Called when match is cancelled
-        /// NOT necessary to call.
         /// </summary>
-        public void quitToMenu()
+        void quitToMenu()
         {
             ScoreMilk.Connection.Instance.quitToMenuCall();
         }
+
         /// <summary>
-        /// Emits message to server that says the match ended. Accumulated points must be the same as added points
+        /// Tells the server that the game is ready to start
+        /// </summary>
+        public void EmitReady()
+        {
+            HttpRequestData data = new HttpRequestData();
+            data.match_room_id = NetworkManager.Instance.matchId;
+            data.player_id = NetworkManager.Instance.userId;
+            data.points = "";
+
+            //Application.ExternalCall("socket.emit", "EMIT_READY", new JSONObject(data));
+            WebConnection.Instance.Emit("/matches/player-loaded-game", data);
+        }
+
+        /// <summary>
+        /// Tells the backend that the match is finished
         /// points: total points acquired during match
         /// </summary>
         public void EmitGameOver(int points)
@@ -103,8 +123,9 @@ namespace ScoreMilk{
 
             WebConnection.Instance.Emit("/matches/player-finished-game", data);
         }
+
         /// <summary>
-        /// Emits message to server that says player got points during match
+        /// Tells the backend the user received points
         /// </summary>
         public void EmitAddScore(int score)
         {
@@ -115,23 +136,12 @@ namespace ScoreMilk{
 
             WebConnection.Instance.Emit("/matches/player-score-game", data);
         }
-        /// <summary>
-        /// Emits message to server that says player is ready to start match
-        /// </summary>
-        public void EmitReady()
-        {
-            HttpRequestData data = new HttpRequestData();
-            data.match_room_id = NetworkManager.Instance.matchId;
-            data.player_id = NetworkManager.Instance.userId;
-            data.points = "";
 
-            //Application.ExternalCall("socket.emit", "EMIT_READY", new JSONObject(data));
-            WebConnection.Instance.Emit("/matches/player-loaded-game", data);
-        }
         void OnApplicationQuit()
         {
             OnlineApplicationQuit();
         }
+
         void OnlineApplicationQuit()
         {
             EmitGameOver(0);
