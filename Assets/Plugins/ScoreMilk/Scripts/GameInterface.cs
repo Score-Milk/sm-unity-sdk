@@ -1,8 +1,8 @@
 
 /* 
     Game interface module
-    This module provides events for the game to subscribe to
-    And provides methods the game must call: EmitAddScore, EmitGameOver and EmitReady
+    This is the module that provides events and methods for the game
+    You should subscribe to the events and call the methods EmitAddScore, EmitGameOver and EmitReady
 */
     
 using System;
@@ -62,7 +62,7 @@ public class GameInterface : Singleton<GameInterface>
         /// </summary>
         public static void EmitAddScore(int score)
         {
-            BridgeCommunication.Instance.EmitAddScore(score);
+            BackendCommunication.Instance.EmitAddScore(score);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ public class GameInterface : Singleton<GameInterface>
         /// </summary>
         public static void EmitGameOver(int points)
         {
-            BridgeCommunication.Instance.EmitGameOver(points);
+            BackendCommunication.Instance.EmitGameOver(points);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ public class GameInterface : Singleton<GameInterface>
         /// </summary>
         public static void EmitReady()
         {
-            BridgeCommunication.Instance.EmitReady();
+            BackendCommunication.Instance.EmitLoaded();
         }
 
     // Internal functions

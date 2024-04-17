@@ -8,11 +8,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
+using OPS.AntiCheat.Field;
+
 namespace ScoreMilk {
 public class BackendCommunication : Singleton<BackendCommunication>
 {
     [Tooltip("URL to test in unity editor. Automatically set in web environment")]
     [SerializeField] private string url;
+    private ProtectedString matchId = string.Empty;
+    private ProtectedString userId = string.Empty;
 
     // Initialization
     protected override void StartUp()
@@ -24,15 +28,22 @@ public class BackendCommunication : Singleton<BackendCommunication>
         url = _url;
     }
 
-    public void Emit(string name, HttpRequestData data){
-        StartCoroutine(SendHttpRequest(url + name, data));
+    public void SetUserId(string _userId) {
+        userId = _userId;
     }
 
-    IEnumerator SendHttpRequest(string names, HttpRequestData data) {
+    public void SetMatchId(string _matchId) {
+        matchId = _matchId;
+    }
+
+    IEnumerator SendHttpRequest(string path, HttpRequestData data) {
+        data.match_room_id = BackendCommunication.Instance.matchId;
+        data.player_id = BackendCommunication.Instance.userId;
+
         EncryptedHttpRequestData encryptedData = new EncryptedHttpRequestData();
         encryptedData.data = ScoreMilk.Encryption.Encrypt(JsonUtility.ToJson(data));
 
-        UnityWebRequest www = UnityWebRequest.Put(names, JsonUtility.ToJson(encryptedData));
+        UnityWebRequest www = UnityWebRequest.Put(url + path, JsonUtility.ToJson(encryptedData));
         www.SetRequestHeader( "Content-type", "application/json");
         www.SetRequestHeader( "Authorization", data.player_id);
         www.SetRequestHeader("SM-APP", "SDK-0.2.4+");
@@ -43,10 +54,37 @@ public class BackendCommunication : Singleton<BackendCommunication>
             Debug.Log(www.error);
         }
     }
-}
+
+        public void EmitLoaded()
+        {
+            StartCoroutine(SendHttpRequest("/matches/player-loaded-game", new HttpRequestData()));
+        }
+
+        public void EmitAddScore(int score)
+        {
+            HttpRequestData data = new HttpRequestData();
+            data.points = score.ToString();
+
+            StartCoroutine(SendHttpRequest("/matches/player-score-game", data));
+        }
+
+        public void EmitGameOver(int points)
+        {
+            HttpRequestData data = new HttpRequestData();
+            data.points = points.ToString();
+
+            StartCoroutine(SendHttpRequest("/matches/player-finished-game", data));
+        }
+    }
 }
 
 [Serializable]
 public class EncryptedHttpRequestData {
     public string data;
+}
+
+public class HttpRequestData {
+    public string match_room_id;
+    public string player_id;
+    public string points;
 }

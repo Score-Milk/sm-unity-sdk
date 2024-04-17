@@ -6,14 +6,9 @@
 using System;
 using UnityEngine;
 
-using OPS.AntiCheat.Field;
-
 namespace ScoreMilk{
     public class BridgeCommunication : Singleton<BridgeCommunication>
     {
-        private ProtectedString matchId = string.Empty;
-        private ProtectedString userId = string.Empty;
-
         // Initialization
         protected override void StartUp()
         {
@@ -41,7 +36,7 @@ namespace ScoreMilk{
         void login(string jsonData)
         {
             LoginData data = JsonUtility.FromJson<LoginData>(jsonData);
-            BridgeCommunication.Instance.userId = data.userId;
+            BackendCommunication.Instance.SetUserId(data.userId);
             ScoreMilk.GameInterface.Instance.loginCall(data);
         }
 
@@ -50,7 +45,7 @@ namespace ScoreMilk{
         /// </summary>
         public void logout()
         {
-            BridgeCommunication.Instance.userId = null;
+            BackendCommunication.Instance.SetUserId(null);
             ScoreMilk.GameInterface.Instance.logoutCall();
         }
 
@@ -69,7 +64,7 @@ namespace ScoreMilk{
             try
             {
                 data = JsonUtility.FromJson<GetReadyData>(json);
-                BridgeCommunication.Instance.matchId = data.matchId;
+                BackendCommunication.Instance.SetUserId(data.matchId);
             }
             catch (Exception e)
             {
@@ -93,49 +88,6 @@ namespace ScoreMilk{
         {
             ScoreMilk.GameInterface.Instance.quitToMenuCall();
         }
-
-        /// <summary>
-        /// Tells the server that the game is ready to start
-        /// TODO this method should be in the GameInterface class
-        /// </summary>
-        public void EmitReady()
-        {
-            HttpRequestData data = new HttpRequestData();
-            data.match_room_id = BridgeCommunication.Instance.matchId;
-            data.player_id = BridgeCommunication.Instance.userId;
-
-            BackendCommunication.Instance.Emit("/matches/player-loaded-game", data);
-        }
-
-        /// <summary>
-        /// Tells the backend that the match is finished
-        /// points: total points acquired during match
-        /// TODO this method should be in the GameInterface class
-        /// </summary>
-        public void EmitGameOver(int points)
-        {
-            HttpRequestData data = new HttpRequestData();
-            data.match_room_id = BridgeCommunication.Instance.matchId;
-            data.player_id = BridgeCommunication.Instance.userId;
-
-            data.points = points.ToString();
-
-            BackendCommunication.Instance.Emit("/matches/player-finished-game", data);
-        }
-
-        /// <summary>
-        /// Tells the backend the user received points
-        /// TODO this method should be in the GameInterface class
-        /// </summary>
-        public void EmitAddScore(int score)
-        {
-            HttpRequestData data = new HttpRequestData();
-            data.match_room_id = BridgeCommunication.Instance.matchId;
-            data.player_id = BridgeCommunication.Instance.userId;
-            data.points = score.ToString();
-
-            BackendCommunication.Instance.Emit("/matches/player-score-game", data);
-        }
     }
 
     // We could remove this class and use the string
@@ -144,12 +96,6 @@ namespace ScoreMilk{
     [Serializable]
     public class GetReadyData {
         public string matchId;
-    }
-
-    public class HttpRequestData {
-        public string match_room_id;
-        public string player_id;
-        public string points;
     }
 
     public class LoginData {
