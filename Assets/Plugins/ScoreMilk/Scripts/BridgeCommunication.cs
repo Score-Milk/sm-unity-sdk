@@ -20,7 +20,7 @@ namespace ScoreMilk{
         {
 
             GameLoadedData data = new GameLoadedData();
-            data.version = "0.2.4";
+            data.version = "0.2.5";
             data.platform = "Unity";
 
             Application.ExternalCall("postMessage", "gameLoaded", JsonUtility.ToJson(data));		
