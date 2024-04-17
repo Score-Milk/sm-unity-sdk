@@ -11,14 +11,6 @@ window.gameLoaded = () => {
 	}, "*");
 };
 
-window.enableFullScreen = () => {
-	window.unityInstance.SetFullscreen(1);
-};
-
-window.disableFullScreen = () => {
-	window.unityInstance.SetFullscreen(0);
-};
-
 window.addEventListener('load', async function () {
 	window.addEventListener("message", (event) => {
 		const { message, data } = event.data;

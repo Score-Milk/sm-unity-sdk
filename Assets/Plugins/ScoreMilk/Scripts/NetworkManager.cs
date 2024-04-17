@@ -23,13 +23,6 @@ namespace ScoreMilk{
         {
             Application.ExternalCall("gameLoaded");
         }
-        static void EnableFullScreen()
-        {
-            Application.ExternalCall("enableFullScreen");
-        }
-        private void DisableFullScreen(){
-            Application.ExternalCall("disableFullScreen");
-        }
         void init(string jsonData)
         {
             InitData data = JsonUtility.FromJson<InitData>(jsonData);
