@@ -1,8 +1,8 @@
 
 /* 
-    These are functions that the game should call
-    To add score or tell the frontend that the game is ready
-    Or that the game finished
+    Game interface module
+    This module provides events for the game to subscribe to
+    And provides methods the game must call: EmitAddScore, EmitGameOver and EmitReady
 */
     
 using System;

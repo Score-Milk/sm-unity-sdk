@@ -1,3 +1,8 @@
+/* 
+    Backend communication module
+    These methods send data to the Score Milk Backend
+*/
+
 using System;
 using System.Collections;
 using UnityEngine;
@@ -20,9 +25,10 @@ public class WebConnection : Singleton<WebConnection>
     }
 
     public void Emit(string name, HttpRequestData data){
-        StartCoroutine(GetText(url + name, data));
+        StartCoroutine(SendHttpRequest(url + name, data));
     }
-    IEnumerator GetText(string names, HttpRequestData data) {
+
+    IEnumerator SendHttpRequest(string names, HttpRequestData data) {
         EncryptedHttpRequestData encryptedData = new EncryptedHttpRequestData();
         encryptedData.data = ScoreMilk.Encryption.Encrypt(JsonUtility.ToJson(data));
 

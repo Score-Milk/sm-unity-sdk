@@ -1,7 +1,6 @@
 /*
+    Bridge communication module
     These are internal methods of the Score Milk SDK.
-    Only consume the following methods in your game:
-    EmitGameOver, EmitAddScore, EmitReady
 */
 
 using System;
@@ -97,21 +96,21 @@ namespace ScoreMilk{
 
         /// <summary>
         /// Tells the server that the game is ready to start
+        /// TODO this method should be in the Connection class
         /// </summary>
         public void EmitReady()
         {
             HttpRequestData data = new HttpRequestData();
             data.match_room_id = NetworkManager.Instance.matchId;
             data.player_id = NetworkManager.Instance.userId;
-            data.points = "";
 
-            //Application.ExternalCall("socket.emit", "EMIT_READY", new JSONObject(data));
             WebConnection.Instance.Emit("/matches/player-loaded-game", data);
         }
 
         /// <summary>
         /// Tells the backend that the match is finished
         /// points: total points acquired during match
+        /// TODO this method should be in the Connection class
         /// </summary>
         public void EmitGameOver(int points)
         {
@@ -126,6 +125,7 @@ namespace ScoreMilk{
 
         /// <summary>
         /// Tells the backend the user received points
+        /// TODO this method should be in the Connection class
         /// </summary>
         public void EmitAddScore(int score)
         {
@@ -135,16 +135,6 @@ namespace ScoreMilk{
             data.points = score.ToString();
 
             WebConnection.Instance.Emit("/matches/player-score-game", data);
-        }
-
-        void OnApplicationQuit()
-        {
-            OnlineApplicationQuit();
-        }
-
-        void OnlineApplicationQuit()
-        {
-            EmitGameOver(0);
         }
     }
 
