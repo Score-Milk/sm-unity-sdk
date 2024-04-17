@@ -75,11 +75,27 @@ public class GameInterface : Singleton<GameInterface>
         }
 
         /// <summary>
-        /// Emits message to server that says player is ready to start match
+        /// Emits message to the frontend that says player is ready to start match
         /// </summary>
         public static void EmitReady()
         {
             BackendCommunication.Instance.EmitLoaded();
+        }
+
+        /// <summary>
+        /// Tells the frontend that the user is in a practice match
+        /// </summary>
+        public static void EmitPracticing()
+        {
+            BridgeCommunication.emitPracticing();
+        }
+
+        /// <summary>
+        /// Tells the frontend that the user is not in a match
+        /// </summary>
+        public static void EmitIdle()
+        {
+            BridgeCommunication.emitIdle();
         }
 
     // Internal functions

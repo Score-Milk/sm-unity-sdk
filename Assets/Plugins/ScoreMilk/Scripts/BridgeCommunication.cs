@@ -12,11 +12,11 @@ namespace ScoreMilk{
         // Initialization
         protected override void StartUp()
         {
-            EmitGameLoaded();
+            emitGameLoaded();
         }
 
         // Tells the frontend that the game is loaded and sends the SDK version
-        static void EmitGameLoaded()
+        static void emitGameLoaded()
         {
             PostBridgeMessageData data = new PostBridgeMessageData();
             data.message = "gameLoaded";
@@ -27,7 +27,7 @@ namespace ScoreMilk{
         }
 
         // Tells the frontend that the game is idle and can start matches
-        static void EmitIdle()
+        public static void emitIdle()
         {
             PostBridgeMessageData data = new PostBridgeMessageData();
             data.message = "stateIdle";
@@ -36,7 +36,7 @@ namespace ScoreMilk{
         }
 
         // Tells the frontend that the game is in a practice match
-        static void EmitPracticing()
+        public static void emitPracticing()
         {
             PostBridgeMessageData data = new PostBridgeMessageData();
             data.message = "statePractice";
@@ -67,7 +67,7 @@ namespace ScoreMilk{
         /// <summary>
         /// Called when the user logs out
         /// </summary>
-        public void logout()
+        void logout()
         {
             BackendCommunication.Instance.SetUserId(null);
             ScoreMilk.GameInterface.Instance.logoutCall();
