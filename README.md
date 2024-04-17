@@ -33,31 +33,31 @@ Note: If you don’t find this option or it is disabled, please install WebGL bu
 - You Subscribe events in a GameObject as shown below:
 ```
 private void OnEnable() {
-    ScoreMilk.Connection.OnGetReady += OnMatchmaking;
+    ScoreMilk.GameInterface.OnGetReady += OnMatchmaking;
 }
 
 private void OnDisable() {
-    ScoreMilk.Connection.OnGetReady -= OnMatchmaking;
+    ScoreMilk.GameInterface.OnGetReady -= OnMatchmaking;
 }
 ```
 - You have to Subscribe/Unsubscribe to 4 events:
-    - `ScoreMilk.Connection.OnInit` - Received as soon as the game calls the `gameLoaded` function.
-    - `ScoreMilk.Connection.OnGetReady` - Player pressed "play" button. Game should go to real match scene and wait for start.
-    - `ScoreMilk.Connection.OnStartPracticeGame` - Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
-    - `ScoreMilk.Connection.OnQuitToMenu` - Match was cancelled for any reason. Game should go back previous scene or title.
-    - `ScoreMilk.Connection.OnStartRealGame` - Both players are ready and accepted the required crypto transaction. Game should continue and start match.
-    - `ScoreMilk.Connection.OnLogin` - User logged in. Sends user data in the event
-    - `ScoreMilk.Connection.OnLogout` - User logged out
+    - `ScoreMilk.GameInterface.OnInit` - Received as soon as the game calls the `gameLoaded` function.
+    - `ScoreMilk.GameInterface.OnGetReady` - Player pressed "play" button. Game should go to real match scene and wait for start.
+    - `ScoreMilk.GameInterface.OnStartPracticeGame` - Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
+    - `ScoreMilk.GameInterface.OnQuitToMenu` - Match was cancelled for any reason. Game should go back previous scene or title.
+    - `ScoreMilk.GameInterface.OnStartRealGame` - Both players are ready and accepted the required crypto transaction. Game should continue and start match.
+    - `ScoreMilk.GameInterface.OnLogin` - User logged in. Sends user data in the event
+    - `ScoreMilk.GameInterface.OnLogout` - User logged out
 
  ### 6) Emit messages to server accordingly to game
 - You emit messages like this:
-ScoreMilk.Connection.EmitAddScore(points);
+ScoreMilk.GameInterface.EmitAddScore(points);
 
 - You have to emit 3 messages:
 ```
-    ScoreMilk.Connection.EmitReady(): When the game is ready to start a real match. After emitting this, just wait. Do not start the match yet.
-    ScoreMilk.Connection.EmitAddScore(int points): When player scored `points`. `points` can be positive or negative.
-    ScoreMilk.Connection.EmitGameOver(int points): When game has ended. `points` emitted at GameOver must be the same as the sum of all `points` emitted previously
+    ScoreMilk.GameInterface.EmitReady(): When the game is ready to start a real match. After emitting this, just wait. Do not start the match yet.
+    ScoreMilk.GameInterface.EmitAddScore(int points): When player scored `points`. `points` can be positive or negative.
+    ScoreMilk.GameInterface.EmitGameOver(int points): When game has ended. `points` emitted at GameOver must be the same as the sum of all `points` emitted previously
 ```
 Notes:
 

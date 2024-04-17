@@ -9,23 +9,23 @@ public class GameControllerExample : MonoBehaviour
 # region Subscribing events
     // Subscribes to events on start of Application
     private void OnEnable() {
-        ScoreMilk.Connection.OnGetReady += GetReady;
-        ScoreMilk.Connection.OnStartPracticeGame += StartPracticeGame;
-        ScoreMilk.Connection.OnQuitToMenu += QuitToMenu;
-        ScoreMilk.Connection.OnStartRealGame += StartRealGame;
-        ScoreMilk.Connection.OnInit += Init;
-        ScoreMilk.Connection.OnLogin += Login;
-        ScoreMilk.Connection.OnLogout += Logout;
+        ScoreMilk.GameInterface.OnGetReady += GetReady;
+        ScoreMilk.GameInterface.OnStartPracticeGame += StartPracticeGame;
+        ScoreMilk.GameInterface.OnQuitToMenu += QuitToMenu;
+        ScoreMilk.GameInterface.OnStartRealGame += StartRealGame;
+        ScoreMilk.GameInterface.OnInit += Init;
+        ScoreMilk.GameInterface.OnLogin += Login;
+        ScoreMilk.GameInterface.OnLogout += Logout;
     }
     // Unsubscribes to events on end of Application
     private void OnDisable() {
-        ScoreMilk.Connection.OnGetReady -= GetReady;
-        ScoreMilk.Connection.OnStartPracticeGame -= StartPracticeGame;
-        ScoreMilk.Connection.OnQuitToMenu -= QuitToMenu;
-        ScoreMilk.Connection.OnStartRealGame -= StartRealGame;
-        ScoreMilk.Connection.OnInit -= Init;
-        ScoreMilk.Connection.OnLogin -= Login;
-        ScoreMilk.Connection.OnLogout -= Logout;
+        ScoreMilk.GameInterface.OnGetReady -= GetReady;
+        ScoreMilk.GameInterface.OnStartPracticeGame -= StartPracticeGame;
+        ScoreMilk.GameInterface.OnQuitToMenu -= QuitToMenu;
+        ScoreMilk.GameInterface.OnStartRealGame -= StartRealGame;
+        ScoreMilk.GameInterface.OnInit -= Init;
+        ScoreMilk.GameInterface.OnLogin -= Login;
+        ScoreMilk.GameInterface.OnLogout -= Logout;
     }
 # endregion
 
@@ -33,15 +33,15 @@ public class GameControllerExample : MonoBehaviour
 
     // Call this to register points during online match
     public void EmitAddScore(int points){
-        ScoreMilk.Connection.EmitAddScore(points);
+        ScoreMilk.GameInterface.EmitAddScore(points);
     }
     // Call this to register final pontuation at the end of match
     public void EmitGameOver(int points){
-        ScoreMilk.Connection.EmitGameOver(points);
+        ScoreMilk.GameInterface.EmitGameOver(points);
     }
     // Call this to give OK message to server to start match
     public void EmitReady(){
-        ScoreMilk.Connection.EmitReady();
+        ScoreMilk.GameInterface.EmitReady();
     }
 #endregion
 

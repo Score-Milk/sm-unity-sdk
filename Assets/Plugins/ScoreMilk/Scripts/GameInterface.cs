@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace ScoreMilk{
-public class Connection : Singleton<Connection>
+public class GameInterface : Singleton<GameInterface>
 {
     // Events
     // The game should subscribe to them
@@ -62,7 +62,7 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public static void EmitAddScore(int score)
         {
-            NetworkManager.Instance.EmitAddScore(score);
+            BridgeCommunication.Instance.EmitAddScore(score);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public static void EmitGameOver(int points)
         {
-            NetworkManager.Instance.EmitGameOver(points);
+            BridgeCommunication.Instance.EmitGameOver(points);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ public class Connection : Singleton<Connection>
         /// </summary>
         public static void EmitReady()
         {
-            NetworkManager.Instance.EmitReady();
+            BridgeCommunication.Instance.EmitReady();
         }
 
     // Internal functions

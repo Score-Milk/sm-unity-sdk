@@ -9,7 +9,7 @@ using UnityEngine;
 using OPS.AntiCheat.Field;
 
 namespace ScoreMilk{
-    public class NetworkManager : Singleton<NetworkManager>
+    public class BridgeCommunication : Singleton<BridgeCommunication>
     {
         private ProtectedString matchId = string.Empty;
         private ProtectedString userId = string.Empty;
@@ -31,8 +31,8 @@ namespace ScoreMilk{
         void init(string jsonData)
         {
             InitData data = JsonUtility.FromJson<InitData>(jsonData);
-            WebConnection.Instance.SetUrl(data.API_URL);
-            ScoreMilk.Connection.Instance.initCall(data);
+            BackendCommunication.Instance.SetUrl(data.API_URL);
+            ScoreMilk.GameInterface.Instance.initCall(data);
         }
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace ScoreMilk{
         void login(string jsonData)
         {
             LoginData data = JsonUtility.FromJson<LoginData>(jsonData);
-            NetworkManager.Instance.userId = data.userId;
-            ScoreMilk.Connection.Instance.loginCall(data);
+            BridgeCommunication.Instance.userId = data.userId;
+            ScoreMilk.GameInterface.Instance.loginCall(data);
         }
 
         /// <summary>
@@ -50,15 +50,15 @@ namespace ScoreMilk{
         /// </summary>
         public void logout()
         {
-            NetworkManager.Instance.userId = null;
-            ScoreMilk.Connection.Instance.logoutCall();
+            BridgeCommunication.Instance.userId = null;
+            ScoreMilk.GameInterface.Instance.logoutCall();
         }
 
         /// <summary>
         /// Received when the user clicks the practice button
         /// </summary>
         void startPracticeGame(){
-            Connection.Instance.startPracticeGameCall();
+            GameInterface.Instance.startPracticeGameCall();
         }
 
         /// <summary>
@@ -69,13 +69,13 @@ namespace ScoreMilk{
             try
             {
                 data = JsonUtility.FromJson<GetReadyData>(json);
-                NetworkManager.Instance.matchId = data.matchId;
+                BridgeCommunication.Instance.matchId = data.matchId;
             }
             catch (Exception e)
             {
                 Debug.Log(e.ToString());
             }
-            ScoreMilk.Connection.Instance.getReadyCall(data);
+            ScoreMilk.GameInterface.Instance.getReadyCall(data);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace ScoreMilk{
         /// </summary>
         void startRealGame() 
         {
-            Connection.Instance.startRealGameCall();
+            GameInterface.Instance.startRealGameCall();
         }
 
         /// <summary>
@@ -91,50 +91,50 @@ namespace ScoreMilk{
         /// </summary>
         void quitToMenu()
         {
-            ScoreMilk.Connection.Instance.quitToMenuCall();
+            ScoreMilk.GameInterface.Instance.quitToMenuCall();
         }
 
         /// <summary>
         /// Tells the server that the game is ready to start
-        /// TODO this method should be in the Connection class
+        /// TODO this method should be in the GameInterface class
         /// </summary>
         public void EmitReady()
         {
             HttpRequestData data = new HttpRequestData();
-            data.match_room_id = NetworkManager.Instance.matchId;
-            data.player_id = NetworkManager.Instance.userId;
+            data.match_room_id = BridgeCommunication.Instance.matchId;
+            data.player_id = BridgeCommunication.Instance.userId;
 
-            WebConnection.Instance.Emit("/matches/player-loaded-game", data);
+            BackendCommunication.Instance.Emit("/matches/player-loaded-game", data);
         }
 
         /// <summary>
         /// Tells the backend that the match is finished
         /// points: total points acquired during match
-        /// TODO this method should be in the Connection class
+        /// TODO this method should be in the GameInterface class
         /// </summary>
         public void EmitGameOver(int points)
         {
             HttpRequestData data = new HttpRequestData();
-            data.match_room_id = NetworkManager.Instance.matchId;
-            data.player_id = NetworkManager.Instance.userId;
+            data.match_room_id = BridgeCommunication.Instance.matchId;
+            data.player_id = BridgeCommunication.Instance.userId;
 
             data.points = points.ToString();
 
-            WebConnection.Instance.Emit("/matches/player-finished-game", data);
+            BackendCommunication.Instance.Emit("/matches/player-finished-game", data);
         }
 
         /// <summary>
         /// Tells the backend the user received points
-        /// TODO this method should be in the Connection class
+        /// TODO this method should be in the GameInterface class
         /// </summary>
         public void EmitAddScore(int score)
         {
             HttpRequestData data = new HttpRequestData();
-            data.match_room_id = NetworkManager.Instance.matchId;
-            data.player_id = NetworkManager.Instance.userId;
+            data.match_room_id = BridgeCommunication.Instance.matchId;
+            data.player_id = BridgeCommunication.Instance.userId;
             data.points = score.ToString();
 
-            WebConnection.Instance.Emit("/matches/player-score-game", data);
+            BackendCommunication.Instance.Emit("/matches/player-score-game", data);
         }
     }
 

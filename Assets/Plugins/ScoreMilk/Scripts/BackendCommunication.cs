@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 namespace ScoreMilk {
-public class WebConnection : Singleton<WebConnection>
+public class BackendCommunication : Singleton<BackendCommunication>
 {
     [Tooltip("URL to test in unity editor. Automatically set in web environment")]
     [SerializeField] private string url;
