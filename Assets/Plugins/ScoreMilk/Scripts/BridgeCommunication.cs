@@ -15,6 +15,7 @@ namespace ScoreMilk{
             EmitGameLoaded();
         }
 
+        // Tells the frontend that the game is loaded and sends the SDK version
         static void EmitGameLoaded()
         {
 
@@ -23,6 +24,18 @@ namespace ScoreMilk{
             data.platform = "Unity";
 
             Application.ExternalCall("postMessage", "gameLoaded", JsonUtility.ToJson(data));		
+        }
+
+        // Tells the frontend that the game is idle and can start matches
+        static void EmitIdle()
+        {
+            Application.ExternalCall("postMessage", "stateIdle");		
+        }
+
+        // Tells the frontend that the game is in a practice match
+        static void EmitPracticing()
+        {
+            Application.ExternalCall("postMessage", "statePractice");		
         }
 
         /// <summary>
