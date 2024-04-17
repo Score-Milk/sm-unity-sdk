@@ -55,10 +55,10 @@ public class GameInterface : Singleton<GameInterface>
         public static event EventHandler OnLogout;
 
     // Emit functions
-    // The game should call them
+    // Sends information to the backend
 
         /// <summary>
-        /// Emits message to server that says player got points during match
+        /// Tells the backend that the user got a score
         /// </summary>
         public static void EmitAddScore(int score)
         {
@@ -66,16 +66,7 @@ public class GameInterface : Singleton<GameInterface>
         }
 
         /// <summary>
-        /// Emits message to server that says the match ended. Accumulated points must be the same as added points
-        /// points: total points acquired during match
-        /// </summary>
-        public static void EmitGameOver(int points)
-        {
-            BackendCommunication.Instance.EmitGameOver(points);
-        }
-
-        /// <summary>
-        /// Emits message to the frontend that says player is ready to start match
+        /// Tells the backend that the user is ready to start a match
         /// </summary>
         public static void EmitReady()
         {
@@ -83,19 +74,31 @@ public class GameInterface : Singleton<GameInterface>
         }
 
         /// <summary>
+        /// Tells the backend that the game is over
+        /// points: total points acquired during match
+        /// </summary>
+        public static void EmitGameOver(int points)
+        {
+            BackendCommunication.Instance.EmitGameOver(points);
+        }
+
+    // Message functions
+    // Sends information to the frontend
+
+        /// <summary>
         /// Tells the frontend that the user is in a practice match
         /// </summary>
-        public static void EmitPracticing()
+        public static void MessagePracticing()
         {
-            BridgeCommunication.emitPracticing();
+            BridgeCommunication.messagePracticing();
         }
 
         /// <summary>
         /// Tells the frontend that the user is not in a match
         /// </summary>
-        public static void EmitIdle()
+        public static void MessageIdle()
         {
-            BridgeCommunication.emitIdle();
+            BridgeCommunication.messageIdle();
         }
 
     // Internal functions
