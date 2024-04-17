@@ -18,24 +18,30 @@ namespace ScoreMilk{
         // Tells the frontend that the game is loaded and sends the SDK version
         static void EmitGameLoaded()
         {
-
-            GameLoadedData data = new GameLoadedData();
+            PostBridgeMessageData data = new PostBridgeMessageData();
+            data.message = "gameLoaded";
             data.version = "0.2.5";
             data.platform = "Unity";
 
-            Application.ExternalCall("postMessage", "gameLoaded", JsonUtility.ToJson(data));		
+            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
         }
 
         // Tells the frontend that the game is idle and can start matches
         static void EmitIdle()
         {
-            Application.ExternalCall("postMessage", "stateIdle");		
+            PostBridgeMessageData data = new PostBridgeMessageData();
+            data.message = "stateIdle";
+
+            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));	
         }
 
         // Tells the frontend that the game is in a practice match
         static void EmitPracticing()
         {
-            Application.ExternalCall("postMessage", "statePractice");		
+            PostBridgeMessageData data = new PostBridgeMessageData();
+            data.message = "statePractice";
+
+            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
         }
 
         /// <summary>
@@ -130,7 +136,8 @@ namespace ScoreMilk{
         public string API_URL;
     }
 
-    class GameLoadedData {
+    class PostBridgeMessageData {
+        public string message;
         public string version;
         public string platform;
     }
