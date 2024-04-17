@@ -17,7 +17,12 @@ namespace ScoreMilk{
 
         static void EmitGameLoaded()
         {
-            Application.ExternalCall("gameLoaded");
+
+            GameLoadedData data = new GameLoadedData();
+            data.version = "0.2.4";
+            data.platform = "Unity";
+
+            Application.ExternalCall("postMessage", "gameLoaded", JsonUtility.ToJson(data));		
         }
 
         /// <summary>
@@ -110,5 +115,10 @@ namespace ScoreMilk{
     public class InitData {
         public string ENVIRONMENT;
         public string API_URL;
+    }
+
+    class GameLoadedData {
+        public string version;
+        public string platform;
     }
 }
