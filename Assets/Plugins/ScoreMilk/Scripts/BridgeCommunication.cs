@@ -36,7 +36,7 @@ namespace ScoreMilk{
         }
 
         // Tells the frontend that the game is in a practice match
-        public static void messagePracticing()
+        public static void messagePractice()
         {
             PostBridgeMessageData data = new PostBridgeMessageData();
             data.message = "statePractice";

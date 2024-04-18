@@ -88,9 +88,9 @@ public class GameInterface : Singleton<GameInterface>
         /// <summary>
         /// Tells the frontend that the user is in a practice match
         /// </summary>
-        public static void MessagePracticing()
+        public static void MessagePractice()
         {
-            BridgeCommunication.messagePracticing();
+            BridgeCommunication.messagePractice();
         }
 
         /// <summary>
