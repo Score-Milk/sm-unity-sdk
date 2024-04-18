@@ -40,25 +40,29 @@ private void OnDisable() {
     ScoreMilk.GameInterface.OnGetReady -= OnMatchmaking;
 }
 ```
-- You have to Subscribe/Unsubscribe to 4 events:
+- You have to Subscribe/Unsubscribe to four events:
     - `ScoreMilk.GameInterface.OnInit` - Received as soon as the game calls the `gameLoaded` function.
     - `ScoreMilk.GameInterface.OnGetReady` - Player pressed "play" button. Game should go to real match scene and wait for start.
     - `ScoreMilk.GameInterface.OnStartPracticeGame` - Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
     - `ScoreMilk.GameInterface.OnQuitToMenu` - Match was cancelled for any reason. Game should go back previous scene or title.
     - `ScoreMilk.GameInterface.OnStartRealGame` - Both players are ready and accepted the required crypto transaction. Game should continue and start match.
+
+ - These events are optional:
     - `ScoreMilk.GameInterface.OnLogin` - User logged in. Sends user data in the event
     - `ScoreMilk.GameInterface.OnLogout` - User logged out
 
- ### 6) Emit messages to server accordingly to game
-- You emit messages like this:
-ScoreMilk.GameInterface.EmitAddScore(points);
+ ### 6) Emit messages to server according to game
+- You emit messages like this: `ScoreMilk.GameInterface.EmitAddScore(points);`
 
-- You have to emit 3 messages:
-```
-    ScoreMilk.GameInterface.EmitReady(): When the game is ready to start a real match. After emitting this, just wait. Do not start the match yet.
-    ScoreMilk.GameInterface.EmitAddScore(int points): When player scored `points`. `points` can be positive or negative.
-    ScoreMilk.GameInterface.EmitGameOver(int points): When game has ended. `points` emitted at GameOver must be the same as the sum of all `points` emitted previously
-```
+- You have to emit three events to the backend:
+    - `ScoreMilk.GameInterface.EmitReady()`: When the game is ready to start a real match. After emitting this, just wait. Do not start the match yet.
+    - `ScoreMilk.GameInterface.EmitAddScore(int points)`: When player scored `points`. `points` can be positive or negative.
+    - `ScoreMilk.GameInterface.EmitGameOver(int points)`: When game has ended. `points` emitted at GameOver must be the same as the sum of all `points` emitted previously
+
+- You have to send two messages to the frontend:
+    - `ScoreMilk.GameInterface.MessagePractice()`: Call this function whenever the game goes to practice mode.
+    - `ScoreMilk.GameInterface.MessageIdle()`: Call this function whenever the game exits practice mode.
+
 Notes:
 
 Location of code varies heavily accordingly with game
@@ -75,7 +79,7 @@ The information flow should go as follows:
 
 # Example
 
-See "GameControllerExample.cs" script for a usage example and basic explanation
+See `GameControllerExample.cs` script for a usage example and basic explanation
 
 # Community and Support
 You can meet other Score Milk users and get support on our [Discord](https://discord.gg/N2mEknPs)!
