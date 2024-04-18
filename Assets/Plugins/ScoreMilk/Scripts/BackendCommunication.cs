@@ -37,8 +37,8 @@ public class BackendCommunication : Singleton<BackendCommunication>
     }
 
     IEnumerator SendHttpRequest(string path, HttpRequestData data) {
-        data.match_room_id = BackendCommunication.Instance.matchId;
-        data.player_id = BackendCommunication.Instance.userId;
+        data.match_room_id = Instance.matchId;
+        data.player_id = Instance.userId;
 
         EncryptedHttpRequestData encryptedData = new EncryptedHttpRequestData();
         encryptedData.data = ScoreMilk.Encryption.Encrypt(JsonUtility.ToJson(data));
@@ -51,6 +51,7 @@ public class BackendCommunication : Singleton<BackendCommunication>
         yield return www.SendWebRequest();
  
         if (www.result != UnityWebRequest.Result.Success) {
+            Debug.Log(System.Text.Encoding.Default.GetString(www.downloadHandler.data));
             Debug.Log(www.error);
         }
     }
