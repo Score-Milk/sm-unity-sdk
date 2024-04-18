@@ -83,9 +83,3 @@ public class BackendCommunication : Singleton<BackendCommunication>
 public class EncryptedHttpRequestData {
     public string data;
 }
-
-public class HttpRequestData {
-    public string match_room_id;
-    public string player_id;
-    public string points;
-}

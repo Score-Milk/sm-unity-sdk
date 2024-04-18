@@ -141,4 +141,12 @@ namespace ScoreMilk{
         public string version;
         public string platform;
     }
+
+    // TODO move this class to backend module
+    // It gets obfuscated by something, making the json keys unrecognizable by the backend
+    public class HttpRequestData {
+        public string match_room_id;
+        public string player_id;
+        public string points;
+    }
 }
