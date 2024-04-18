@@ -88,7 +88,7 @@ namespace ScoreMilk{
             try
             {
                 data = JsonUtility.FromJson<GetReadyData>(json);
-                BackendCommunication.Instance.SetUserId(data.matchId);
+                BackendCommunication.Instance.SetMatchId(data.matchId);
             }
             catch (Exception e)
             {
