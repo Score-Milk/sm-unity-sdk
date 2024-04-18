@@ -1,8 +1,8 @@
 
 /* 
-    These are functions that the game should call
-    To add score or tell the frontend that the game is ready
-    Or that the game finished
+    Game interface module
+    This is the module that provides events and methods for the game
+    You should subscribe to the events and call the methods EmitAddScore, EmitGameOver and EmitReady
 */
     
 using System;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace ScoreMilk{
-public class Connection : Singleton<Connection>
+public class GameInterface : Singleton<GameInterface>
 {
     // Events
     // The game should subscribe to them
@@ -55,31 +55,50 @@ public class Connection : Singleton<Connection>
         public static event EventHandler OnLogout;
 
     // Emit functions
-    // The game should call them
+    // Sends information to the backend
 
         /// <summary>
-        /// Emits message to server that says player got points during match
+        /// Tells the backend that the user got a score
         /// </summary>
         public static void EmitAddScore(int score)
         {
-            NetworkManager.Instance.EmitAddScore(score);
+            BackendCommunication.Instance.EmitAddScore(score);
         }
 
         /// <summary>
-        /// Emits message to server that says the match ended. Accumulated points must be the same as added points
+        /// Tells the backend that the user is ready to start a match
+        /// </summary>
+        public static void EmitReady()
+        {
+            BackendCommunication.Instance.EmitLoaded();
+        }
+
+        /// <summary>
+        /// Tells the backend that the game is over
         /// points: total points acquired during match
         /// </summary>
         public static void EmitGameOver(int points)
         {
-            NetworkManager.Instance.EmitGameOver(points);
+            BackendCommunication.Instance.EmitGameOver(points);
+        }
+
+    // Message functions
+    // Sends information to the frontend
+
+        /// <summary>
+        /// Tells the frontend that the user is in a practice match
+        /// </summary>
+        public static void MessagePractice()
+        {
+            BridgeCommunication.messagePractice();
         }
 
         /// <summary>
-        /// Emits message to server that says player is ready to start match
+        /// Tells the frontend that the user is not in a match
         /// </summary>
-        public static void EmitReady()
+        public static void MessageIdle()
         {
-            NetworkManager.Instance.EmitReady();
+            BridgeCommunication.messageIdle();
         }
 
     // Internal functions

@@ -1,3 +1,8 @@
+/* 
+    Encryption module
+    Encrypts data to send it to the backend
+*/
+
 using System;
 using System.Collections;
 using UnityEngine;
