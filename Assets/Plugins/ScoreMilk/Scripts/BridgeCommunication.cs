@@ -9,9 +9,14 @@ using UnityEngine;
 namespace ScoreMilk{
     public class BridgeCommunication : Singleton<BridgeCommunication>
     {
+        public Encryption encryption;
+
         // Initialization
         protected override void StartUp()
         {
+            encryption.SetKey();
+
+            // Only emit loaded once everything is setup
             messageGameLoaded();
         }
 

@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2897953748212123775}
-  - component: {fileID: 2897953748212123774}
-  - component: {fileID: -1888799032718306121}
-  - component: {fileID: 8921993388285948677}
   - component: {fileID: -8806953669812669134}
+  - component: {fileID: 4516793039707859316}
+  - component: {fileID: 5783937840234859238}
+  - component: {fileID: 8808961273155191905}
   m_Layer: 0
   m_Name: ScoreMilkManager
   m_TagString: Untagged
@@ -35,43 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2897953748212123774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2897953748212123772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d6059b900db6ab42b0ea7ab3f665298, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-1888799032718306121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2897953748212123772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: deb65c6c2abb6134e8dbaf149f40967d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8921993388285948677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2897953748212123772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 170ae35a091e37f48aafd1b637253dd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  url: https://api.scoremilk.com/matches
 --- !u!114 &-8806953669812669134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,3 +48,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyHex: 
+--- !u!114 &4516793039707859316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2897953748212123772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb02a0836dd2797492babbfb9d3a4df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  encryption: {fileID: -8806953669812669134}
+--- !u!114 &5783937840234859238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2897953748212123772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d4c305357739263b2bddf6e1696423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  url: 
+--- !u!114 &8808961273155191905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2897953748212123772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad862d68acd05284a0f05ca096aa500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
