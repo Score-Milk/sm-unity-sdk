@@ -11,12 +11,16 @@ using OPS.AntiCheat.Field;
 namespace ScoreMilk{
     public class NetworkManager : Singleton<NetworkManager>
     {
+        public Encryption encryption;
         private ProtectedString matchId = string.Empty;
         private ProtectedString userId = string.Empty;
 
         // Initialization
         protected override void StartUp()
         {
+            encryption.SetKey();
+
+            // Only emit loaded once everything is setup
             EmitGameLoaded();
         }
         static void EmitGameLoaded()
