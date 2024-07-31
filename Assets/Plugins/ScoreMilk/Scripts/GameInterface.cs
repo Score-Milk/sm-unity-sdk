@@ -160,5 +160,21 @@ public class GameInterface : Singleton<GameInterface>
         {
             OnQuitToMenu?.Invoke(this, EventArgs.Empty);
         }
-}
+        /// <summary>
+        /// Called when touch or click is detected on screen
+        /// This is important to keep the focus on the iframe
+        /// </summary>
+        void CheckFocus()
+        {
+            Application.ExternalEval("window.focus();");            
+        }
+
+        void Update
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                CheckFocus(); 
+            }
+        }
+    }
 }
