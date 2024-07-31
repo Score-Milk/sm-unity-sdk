@@ -1,3 +1,8 @@
+/* 
+    Encryption module
+    Encrypts data to send it to the backend
+*/
+
 using System;
 using System.Collections;
 using UnityEngine;
@@ -10,11 +15,6 @@ namespace ScoreMilk{
         [Tooltip("The encryption key used for requests")]
         [SerializeField] private string keyHex;
         private static byte[] key;
-            
-        void Start()
-        {
-            SetKey(keyHex);
-        }
 
         private static byte[] HexStringToByteArray(string hex)
         {
@@ -26,14 +26,14 @@ namespace ScoreMilk{
             return bytes;
         }
 
-        private void SetKey(string hexKey)
+        public void SetKey()
         {
-            if (hexKey.Length != 64)
+            if (keyHex.Length != 64)
             {
                 Debug.LogError("Invalid key: the key must have 32 bytes.");
                 return;
             }
-            key = HexStringToByteArray(hexKey);
+            key = HexStringToByteArray(keyHex);
         }
 
         public static string Encrypt(string plainText)
