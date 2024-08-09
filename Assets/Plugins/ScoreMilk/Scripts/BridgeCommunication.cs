@@ -49,6 +49,14 @@ namespace ScoreMilk{
             Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
         }
 
+        // Tells the frontend that the game is in a real match
+        public static void messagePlay()
+        {
+            PostBridgeMessageData data = new PostBridgeMessageData();
+            data.message = "statePlay";
+            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
+        }
+
         /// <summary>
         /// Called after the frontend receives the gameLoaded call 
         /// </summary>

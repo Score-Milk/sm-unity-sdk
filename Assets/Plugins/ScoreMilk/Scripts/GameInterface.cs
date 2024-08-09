@@ -101,6 +101,14 @@ public class GameInterface : Singleton<GameInterface>
             BridgeCommunication.messageIdle();
         }
 
+        /// <summary>
+        /// Tells the frontend that the user is in a real match
+        /// </summary>
+        public static void MessagePlay()
+        {
+            BridgeCommunication.messagePlay();
+        }
+
     // Internal functions
     // The game should ignore these
 
