@@ -25,7 +25,7 @@ namespace ScoreMilk{
         {
             PostBridgeMessageData data = new PostBridgeMessageData();
             data.message = "gameLoaded";
-            data.version = "0.3.0";
+            data.version = "0.4.0";
             data.platform = "Unity";
 
             Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
