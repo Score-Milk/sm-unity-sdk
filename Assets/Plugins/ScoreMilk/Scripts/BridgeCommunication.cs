@@ -39,30 +39,13 @@ namespace ScoreMilk{
             Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
         }
 
-        // Tells the frontend that the game is idle and can start matches
-        public static void messageIdle()
+        public static void messageGameState(string stateName)
         {
-            PostBridgeMessageData data = new PostBridgeMessageData();
-            data.message = "stateIdle";
+            GameStateMessageData data = new GameStateMessageData();
+            data.message = "gameState";
+            data.state = stateName;
 
             Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));	
-        }
-
-        // Tells the frontend that the game is in a practice match
-        public static void messagePractice()
-        {
-            PostBridgeMessageData data = new PostBridgeMessageData();
-            data.message = "statePractice";
-
-            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
-        }
-
-        // Tells the frontend that the game is in a real match
-        public static void messagePlay()
-        {
-            PostBridgeMessageData data = new PostBridgeMessageData();
-            data.message = "statePlay";
-            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
         }
 
         public static void messageCallback(string callName)
@@ -171,10 +154,9 @@ namespace ScoreMilk{
         public string platform;
     }
 
-    class PostBridgeMessageData {
+    class GameStateMessageData {
         public string message;
-        public string version;
-        public string platform;
+        public string state;
     }
 
     class CallbackMessageData {

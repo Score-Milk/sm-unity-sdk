@@ -24,6 +24,18 @@ public class GameInterface : Singleton<GameInterface>
         quitToMenu
     };
 
+    public enum StateNames
+    {
+        // Tells the frontend that the game is idle and can start matches
+        idle,
+
+        // Tells the frontend that the game is in a practice match
+        practice,
+
+        // Tells the frontend that the game is in a real match
+        play,
+    };
+
     // Events
     // The game should subscribe to them
         /// <summary>
@@ -95,29 +107,13 @@ public class GameInterface : Singleton<GameInterface>
 
     // Message functions
     // Sends information to the frontend
-
+    
         /// <summary>
-        /// Tells the frontend that the user is in a practice match
+        /// Communicates the state of the game to the frontend
         /// </summary>
-        public static void MessagePractice()
+        public static void MessageGameState(StateNames stateName)
         {
-            BridgeCommunication.messagePractice();
-        }
-
-        /// <summary>
-        /// Tells the frontend that the user is not in a match
-        /// </summary>
-        public static void MessageIdle()
-        {
-            BridgeCommunication.messageIdle();
-        }
-
-        /// <summary>
-        /// Tells the frontend that the user is in a real match
-        /// </summary>
-        public static void MessagePlay()
-        {
-            BridgeCommunication.messagePlay();
+            BridgeCommunication.messageGameState(Enum.GetName(typeof(StateNames), stateName));
         }
 
         /// <summary>

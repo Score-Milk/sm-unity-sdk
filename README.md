@@ -65,10 +65,11 @@ private void OnMatchmaking() {
     - `ScoreMilk.GameInterface.EmitAddScore(int points)`: When player scored `points`. `points` can be positive or negative.
     - `ScoreMilk.GameInterface.EmitGameOver(int points)`: When game has ended. `points` emitted at GameOver must be the same as the sum of all `points` emitted previously
 
-- You have to send two messages to the frontend:
-    - `ScoreMilk.GameInterface.MessagePractice()`: Call this function whenever the game goes to practice mode.
-    - `ScoreMilk.GameInterface.MessageIdle()`: Call this function whenever the game exits practice mode.
-    - `ScoreMilk.GameInterface.MessagePlay()`: Call this function whenever the game goes to real match mode.
+- You have to send messages to the frontend:
+    - `ScoreMilk.GameInterface.MessageGameState(StateName.idle)`: Call this function whenever the game is not playing.
+    - `ScoreMilk.GameInterface.MessageGameState(StateName.practice)`: Call this function whenever the game goes to practice mode.
+    - `ScoreMilk.GameInterface.MessageGameState(StateName.play)`: Call this function whenever the game goes to real match mode.
+
 
 Notes:
 
