@@ -41,19 +41,17 @@ private void OnDisable() {
 }
 
 private void OnMatchmaking() {
-    GameInterface.MessageCallback(GameInterface.CallbackNames.getReady);
+    GameInterface.MessageCallback(GameInterface.CallName.getReady);
 
     // Your code here
 }
 ```
-- You have to Subscribe/Unsubscribe to four events:
+- You must Subscribe/Unsubscribe to all events:
     - `ScoreMilk.GameInterface.OnInit` - Received as soon as the game calls the `gameLoaded` function.
     - `ScoreMilk.GameInterface.OnGetReady` - Player pressed "play" button. Game should go to real match scene and wait for start.
     - `ScoreMilk.GameInterface.OnStartPracticeGame` - Player pressed "practice" button. Game should go to a practice scene. NOT title screen.
     - `ScoreMilk.GameInterface.OnQuitToMenu` - Match was cancelled for any reason. Game should go back previous scene or title.
     - `ScoreMilk.GameInterface.OnStartRealGame` - Both players are ready and accepted the required crypto transaction. Game should continue and start match.
-
- - These events are optional:
     - `ScoreMilk.GameInterface.OnLogin` - User logged in. Sends user data in the event
     - `ScoreMilk.GameInterface.OnLogout` - User logged out
 
@@ -66,22 +64,20 @@ private void OnMatchmaking() {
     - `ScoreMilk.GameInterface.EmitGameOver(int points)`: When game has ended. `points` emitted at GameOver must be the same as the sum of all `points` emitted previously
 
 - You have to send messages to the frontend:
-    - `ScoreMilk.GameInterface.MessageGameState(StateName.idle)`: Call this function whenever the game is not playing.
-    - `ScoreMilk.GameInterface.MessageGameState(StateName.practice)`: Call this function whenever the game goes to practice mode.
-    - `ScoreMilk.GameInterface.MessageGameState(StateName.play)`: Call this function whenever the game goes to real match mode.
-
-
-Notes:
-
-Location of code varies heavily accordingly with game
-
-Points can be positive or negative. Negative points decrease final value.
-
-Points emitted at GameOver must be the same as the sum of all points emitted previously.
-
-The information flow should go as follows:
-
-![Information Flow](TutorialImages/informationFlow.png)
+    - Game states - Some frontend features depend on the game communicating its current state:
+        - `ScoreMilk.GameInterface.MessageGameState(StateName.idle)`: Call this function whenever the game is not playing.
+        - `ScoreMilk.GameInterface.MessageGameState(StateName.practice)`: Call this function whenever the game goes to practice mode.
+        - `ScoreMilk.GameInterface.MessageGameState(StateName.play)`: Call this function whenever the game goes to real match mode.
+        quitToMenu
+    
+    - Callbacks - The frontend will retry to send calls to the game until you send a callback:
+        - `ScoreMilk.GameInterface.MessageCallback(CallName.init)`: Call this when you receive an `OnInit` event.
+        - `ScoreMilk.GameInterface.MessageCallback(CallName.getReady)`: Call this when you receive an `OnGetReady` event.
+        - `ScoreMilk.GameInterface.MessageCallback(CallName.startPracticeGame)`: Call this when you receive an `OnStartPracticeGame` event.
+        - `ScoreMilk.GameInterface.MessageCallback(CallName.startRealGame)`: Call this when you receive an `OnStartRealGame` event.
+        - `ScoreMilk.GameInterface.MessageCallback(CallName.login)`: Call this when you receive an `OnLogin` event.
+        - `ScoreMilk.GameInterface.MessageCallback(CallName.logout)`: Call this when you receive an `OnLogout` event.
+        - `ScoreMilk.GameInterface.MessageCallback(CallName.quitToMenu)`: Call this when you receive an `OnQuitToMenu` event.
 
  ### 7) You are done!
 
