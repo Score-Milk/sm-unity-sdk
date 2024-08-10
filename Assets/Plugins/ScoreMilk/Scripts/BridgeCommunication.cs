@@ -67,8 +67,9 @@ namespace ScoreMilk{
 
         public static void messageCallback(string callName)
         {
-            PostBridgeMessageData data = new PostBridgeMessageData();
-            data.message = callName;
+            CallbackMessageData data = new CallbackMessageData();
+            data.message = "callback";
+            data.name = callName;
             Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));
         }
 
@@ -168,6 +169,11 @@ namespace ScoreMilk{
         public string message;
         public string version;
         public string platform;
+    }
+
+    class CallbackMessageData {
+        public string message;
+        public string name;
     }
 
     // TODO move this class to backend module
