@@ -64,6 +64,8 @@ private void OnMatchmaking() {
     - `ScoreMilk.GameInterface.EmitGameOver(int points)`: When game has ended. `points` emitted at GameOver must be the same as the sum of all `points` emitted previously
 
 - You have to send messages to the frontend:
+    - Initialization
+        - `ScoreMilk.GameInterface.MessageGameReady()`: Call this function once the game is ready to start a match.
     - Game states - Some frontend features depend on the game communicating its current state:
         - `ScoreMilk.GameInterface.MessageGameState(StateName.idle)`: Call this function whenever the game is not playing.
         - `ScoreMilk.GameInterface.MessageGameState(StateName.practice)`: Call this function whenever the game goes to practice mode.

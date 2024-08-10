@@ -109,6 +109,14 @@ public class GameInterface : Singleton<GameInterface>
     // Sends information to the frontend
     
         /// <summary>
+        /// Tells the frontend that the game is ready to start a match
+        /// </summary>
+        public static void MessageGameReady(StateName stateName)
+        {
+            BridgeCommunication.messageGameReady();
+        }
+
+        /// <summary>
         /// Communicates the state of the game to the frontend
         /// </summary>
         public static void MessageGameState(StateName stateName)

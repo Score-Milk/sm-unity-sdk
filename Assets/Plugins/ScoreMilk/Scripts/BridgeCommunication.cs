@@ -40,9 +40,9 @@ namespace ScoreMilk{
         }
 
         // Tells the frontend that the game can start a match
-        static void messageGameReady()
+        public static void messageGameReady()
         {
-            GameLoadedMessageData data = new GameLoadedMessageData();
+            GameReadyMessageData data = new GameReadyMessageData();
             data.message = "gameReady";
 
             Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
@@ -161,6 +161,10 @@ namespace ScoreMilk{
         public string message;
         public string version;
         public string platform;
+    }
+
+    class GameReadyMessageData {
+        public string message;
     }
 
     class GameStateMessageData {
