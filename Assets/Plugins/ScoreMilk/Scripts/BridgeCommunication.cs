@@ -19,34 +19,50 @@ namespace ScoreMilk{
             // Only emit loaded once everything is setup
             messageGameLoaded();
         }
+        
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Application.ExternalEval("window.focus();");
+            }
+        }
 
         // Tells the frontend that the game is loaded and sends the SDK version
         static void messageGameLoaded()
         {
-            PostBridgeMessageData data = new PostBridgeMessageData();
+            GameLoadedMessageData data = new GameLoadedMessageData();
             data.message = "gameLoaded";
-            data.version = "0.3.0";
+            data.version = "0.4.0";
             data.platform = "Unity";
 
             Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
         }
 
-        // Tells the frontend that the game is idle and can start matches
-        public static void messageIdle()
+        // Tells the frontend that the game can start a match
+        public static void messageGameReady()
         {
-            PostBridgeMessageData data = new PostBridgeMessageData();
-            data.message = "stateIdle";
+            GameReadyMessageData data = new GameReadyMessageData();
+            data.message = "gameReady";
+
+            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
+        }
+
+        public static void messageGameState(string stateName)
+        {
+            GameStateMessageData data = new GameStateMessageData();
+            data.message = "gameState";
+            data.state = stateName;
 
             Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));	
         }
 
-        // Tells the frontend that the game is in a practice match
-        public static void messagePractice()
+        public static void messageCallback(string callName)
         {
-            PostBridgeMessageData data = new PostBridgeMessageData();
-            data.message = "statePractice";
-
-            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
+            CallbackMessageData data = new CallbackMessageData();
+            data.message = "callback";
+            data.name = callName;
+            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));
         }
 
         /// <summary>
@@ -141,10 +157,24 @@ namespace ScoreMilk{
         public string API_URL;
     }
 
-    class PostBridgeMessageData {
+    class GameLoadedMessageData {
         public string message;
         public string version;
         public string platform;
+    }
+
+    class GameReadyMessageData {
+        public string message;
+    }
+
+    class GameStateMessageData {
+        public string message;
+        public string state;
+    }
+
+    class CallbackMessageData {
+        public string message;
+        public string name;
     }
 
     // TODO move this class to backend module

@@ -48,6 +48,8 @@ public class GameControllerExample : MonoBehaviour
 # region Events
 
     private void Init(object sender, InitData e) { 
+        GameInterface.MessageCallback(GameInterface.CallName.init);
+
         print(e.ENVIRONMENT);
     }
 
@@ -55,6 +57,8 @@ public class GameControllerExample : MonoBehaviour
     /// Game prepares itself for the match start and waits
     /// Do not start the match, only prepare for it
     private void GetReady(object sender, GetReadyData e){
+        GameInterface.MessageCallback(GameInterface.CallName.getReady);
+
         print("GetReady stuff here");
         var manager = GameObject.FindWithTag("GameManager");
         if (manager != null){
@@ -63,26 +67,36 @@ public class GameControllerExample : MonoBehaviour
     }
     /// Called when player pressed "practice" button
     private void StartPracticeGame(object sender, EventArgs e){
+        GameInterface.MessageCallback(GameInterface.CallName.startPracticeGame);
+    
         print("StartPracticeGame stuff here");
         SceneManager.LoadScene("PracticeGame");
     }
     /// Called when an error occurs
     private void QuitToMenu(object sender, EventArgs e){
+        GameInterface.MessageCallback(GameInterface.CallName.quitToMenu);
+
         print("QuitToMenu stuff here");
         SceneManager.LoadScene("Menu");
     }
     /// Called when match has started properly
     /// Starts the match
     private void StartRealGame(object sender, EventArgs e){
+        GameInterface.MessageCallback(GameInterface.CallName.startRealGame);
+
         print("StartRealGame stuff here");
         SceneManager.LoadScene("RealGame");
     }
     /// Called when the user connects a wallet
     private void Login(object sender, LoginData e){
+        GameInterface.MessageCallback(GameInterface.CallName.login);
+
         print("Login stuff here");
     }
     /// Called when the user disconnects the wallet
     private void Logout(object sender, EventArgs e){
+        GameInterface.MessageCallback(GameInterface.CallName.logout);
+
         print("Logout stuff here");
         SceneManager.LoadScene("RealGame");
     }

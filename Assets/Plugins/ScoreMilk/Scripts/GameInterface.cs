@@ -13,6 +13,29 @@ using UnityEngine;
 namespace ScoreMilk{
 public class GameInterface : Singleton<GameInterface>
 {
+    public enum CallName
+    {
+        init,
+        getReady,
+        startPracticeGame,
+        startRealGame,
+        login,
+        logout,
+        quitToMenu
+    };
+
+    public enum StateName
+    {
+        // Tells the frontend that the game is idle and can start matches
+        idle,
+
+        // Tells the frontend that the game is in a practice match
+        practice,
+
+        // Tells the frontend that the game is in a real match
+        play,
+    };
+
     // Events
     // The game should subscribe to them
         /// <summary>
@@ -84,21 +107,30 @@ public class GameInterface : Singleton<GameInterface>
 
     // Message functions
     // Sends information to the frontend
-
+    
         /// <summary>
-        /// Tells the frontend that the user is in a practice match
+        /// Tells the frontend that the game is ready to start a match
         /// </summary>
-        public static void MessagePractice()
+        public static void MessageGameReady(StateName stateName)
         {
-            BridgeCommunication.messagePractice();
+            BridgeCommunication.messageGameReady();
         }
 
         /// <summary>
-        /// Tells the frontend that the user is not in a match
+        /// Communicates the state of the game to the frontend
         /// </summary>
-        public static void MessageIdle()
+        public static void MessageGameState(StateName stateName)
         {
-            BridgeCommunication.messageIdle();
+            BridgeCommunication.messageGameState(Enum.GetName(typeof(StateName), stateName));
+        }
+
+        /// <summary>
+        /// Tells the frontend when a call is processed successfully
+        /// If you don't callback, the frontend will retry to send the calls
+        /// </summary>
+        public static void MessageCallback(CallName callName)
+        {
+            BridgeCommunication.messageCallback(Enum.GetName(typeof(CallName), callName));
         }
 
     // Internal functions
@@ -160,5 +192,5 @@ public class GameInterface : Singleton<GameInterface>
         {
             OnQuitToMenu?.Invoke(this, EventArgs.Empty);
         }
-}
+    }
 }
