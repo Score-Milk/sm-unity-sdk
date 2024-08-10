@@ -13,6 +13,17 @@ using UnityEngine;
 namespace ScoreMilk{
 public class GameInterface : Singleton<GameInterface>
 {
+    public enum CallbackNames
+    {
+        init,
+        getReady,
+        startPracticeGame,
+        startRealGame,
+        login,
+        logout,
+        quitToMenu
+    };
+
     // Events
     // The game should subscribe to them
         /// <summary>
@@ -109,6 +120,15 @@ public class GameInterface : Singleton<GameInterface>
             BridgeCommunication.messagePlay();
         }
 
+        /// <summary>
+        /// Tells the frontend when a call is processed successfully
+        /// If you don't callback, the frontend will retry to send the calls
+        /// </summary>
+        public static void MessageCallback(CallbackNames callName)
+        {
+            BridgeCommunication.messageCallback(Enum.GetName(typeof(CallbackNames), callName));
+        }
+
     // Internal functions
     // The game should ignore these
 
@@ -168,5 +188,5 @@ public class GameInterface : Singleton<GameInterface>
         {
             OnQuitToMenu?.Invoke(this, EventArgs.Empty);
         }
-}
+    }
 }

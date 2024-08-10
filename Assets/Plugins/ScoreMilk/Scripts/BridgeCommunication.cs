@@ -65,6 +65,13 @@ namespace ScoreMilk{
             Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
         }
 
+        public static void messageCallback(string callName)
+        {
+            PostBridgeMessageData data = new PostBridgeMessageData();
+            data.message = callName;
+            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));
+        }
+
         /// <summary>
         /// Called after the frontend receives the gameLoaded call 
         /// </summary>
