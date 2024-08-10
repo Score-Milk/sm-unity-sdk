@@ -13,7 +13,7 @@ using UnityEngine;
 namespace ScoreMilk{
 public class GameInterface : Singleton<GameInterface>
 {
-    public enum CallbackNames
+    public enum CallName
     {
         init,
         getReady,
@@ -24,7 +24,7 @@ public class GameInterface : Singleton<GameInterface>
         quitToMenu
     };
 
-    public enum StateNames
+    public enum StateName
     {
         // Tells the frontend that the game is idle and can start matches
         idle,
@@ -111,18 +111,18 @@ public class GameInterface : Singleton<GameInterface>
         /// <summary>
         /// Communicates the state of the game to the frontend
         /// </summary>
-        public static void MessageGameState(StateNames stateName)
+        public static void MessageGameState(StateName stateName)
         {
-            BridgeCommunication.messageGameState(Enum.GetName(typeof(StateNames), stateName));
+            BridgeCommunication.messageGameState(Enum.GetName(typeof(StateName), stateName));
         }
 
         /// <summary>
         /// Tells the frontend when a call is processed successfully
         /// If you don't callback, the frontend will retry to send the calls
         /// </summary>
-        public static void MessageCallback(CallbackNames callName)
+        public static void MessageCallback(CallName callName)
         {
-            BridgeCommunication.messageCallback(Enum.GetName(typeof(CallbackNames), callName));
+            BridgeCommunication.messageCallback(Enum.GetName(typeof(CallName), callName));
         }
 
     // Internal functions
