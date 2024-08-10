@@ -30,7 +30,7 @@ Note: If you don’t find this option or it is disabled, please install WebGL bu
 ![ScoreMilk Manager Prefab](TutorialImages/tutorial4.png)
 
  ### 5) Subscribe GameObjects to ScoreMilk Events
-- You Subscribe events in a GameObject as shown below:
+- You subscribe to events in a GameObject as shown below:
 ```
 private void OnEnable() {
     ScoreMilk.GameInterface.OnGetReady += OnMatchmaking;
@@ -38,6 +38,12 @@ private void OnEnable() {
 
 private void OnDisable() {
     ScoreMilk.GameInterface.OnGetReady -= OnMatchmaking;
+}
+
+private void OnMatchmaking() {
+    GameInterface.MessageCallback(GameInterface.CallbackNames.getReady);
+
+    // Your code here
 }
 ```
 - You have to Subscribe/Unsubscribe to four events:
@@ -62,6 +68,7 @@ private void OnDisable() {
 - You have to send two messages to the frontend:
     - `ScoreMilk.GameInterface.MessagePractice()`: Call this function whenever the game goes to practice mode.
     - `ScoreMilk.GameInterface.MessageIdle()`: Call this function whenever the game exits practice mode.
+    - `ScoreMilk.GameInterface.MessagePlay()`: Call this function whenever the game goes to real match mode.
 
 Notes:
 
