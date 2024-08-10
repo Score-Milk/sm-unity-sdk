@@ -31,10 +31,19 @@ namespace ScoreMilk{
         // Tells the frontend that the game is loaded and sends the SDK version
         static void messageGameLoaded()
         {
-            GetReadyMessageData data = new GetReadyMessageData();
+            GameLoadedMessageData data = new GameLoadedMessageData();
             data.message = "gameLoaded";
             data.version = "0.4.0";
             data.platform = "Unity";
+
+            Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
+        }
+
+        // Tells the frontend that the game can start a match
+        static void messageGameReady()
+        {
+            GameLoadedMessageData data = new GameLoadedMessageData();
+            data.message = "gameReady";
 
             Application.ExternalCall("postBridgeMessage", JsonUtility.ToJson(data));		
         }
@@ -148,7 +157,7 @@ namespace ScoreMilk{
         public string API_URL;
     }
 
-    class GetReadyMessageData {
+    class GameLoadedMessageData {
         public string message;
         public string version;
         public string platform;
