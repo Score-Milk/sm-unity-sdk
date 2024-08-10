@@ -31,7 +31,7 @@ namespace ScoreMilk{
         // Tells the frontend that the game is loaded and sends the SDK version
         static void messageGameLoaded()
         {
-            PostBridgeMessageData data = new PostBridgeMessageData();
+            GetReadyMessageData data = new GetReadyMessageData();
             data.message = "gameLoaded";
             data.version = "0.4.0";
             data.platform = "Unity";
@@ -163,6 +163,12 @@ namespace ScoreMilk{
     public class InitData {
         public string ENVIRONMENT;
         public string API_URL;
+    }
+
+    class GetReadyMessageData {
+        public string message;
+        public string version;
+        public string platform;
     }
 
     class PostBridgeMessageData {
