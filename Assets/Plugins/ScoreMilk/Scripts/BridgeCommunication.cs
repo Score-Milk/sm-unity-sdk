@@ -19,6 +19,14 @@ namespace ScoreMilk{
             // Only emit loaded once everything is setup
             messageGameLoaded();
         }
+        
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Application.ExternalEval("window.focus();");
+            }
+        }
 
         // Tells the frontend that the game is loaded and sends the SDK version
         static void messageGameLoaded()
